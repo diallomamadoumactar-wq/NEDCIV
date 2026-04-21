@@ -1,0 +1,2938 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAMOJA CI — Handbook narratif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EFE6;
+    --bg-warm: #EBE3D4;
+    --bg-card: #FFFFFF;
+    --ink: #1A1A1A;
+    --ink-2: #3E3731;
+    --ink-muted: #786F66;
+    --line: #D9CFBF;
+    --line-strong: #A8998B;
+    --accent: #D0454C;
+    --accent-dark: #A7383E;
+    --accent-soft: #F3D9DB;
+    --ochre: #C6892E;
+    --ochre-soft: #F0E0BF;
+    --blue: #1F3A5F;
+    --blue-soft: #D9E0EA;
+    --terre: #7C3A28;
+    --terre-soft: #E8D4CD;
+    --forest: #3F5B3C;
+    --forest-soft: #D7DFD4;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --max: 1200px;
+    --max-narrow: 760px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: 16px;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ==================== NAV ==================== */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(244, 239, 230, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .logo em {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a {
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+  .nav-cta {
+    padding: 10px 18px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .nav-cta-disabled {
+    padding: 10px 18px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    cursor: not-allowed;
+    opacity: 0.55;
+    position: relative;
+    display: inline-block;
+  }
+  .nav-cta-disabled::after {
+    content: 'bientôt';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--ochre);
+    color: white;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* ==================== NED PAGE ==================== */
+  .ned-toc {
+    position: sticky;
+    top: 65px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: rgba(244, 239, 230, 0.96);
+    backdrop-filter: blur(12px);
+    z-index: 50;
+    margin-bottom: 40px;
+  }
+  .ned-toc-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+  }
+  .ned-toc a {
+    color: var(--ink-muted);
+    white-space: nowrap;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  .ned-toc a:hover { color: var(--accent); }
+
+  .ned-section {
+    padding: 50px 32px 60px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ned-section:last-child { border-bottom: none; }
+  .ned-section-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .ned-section-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .ned-section-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 48px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .ned-section-num small {
+    display: block;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  .ned-def-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 700px) { .ned-def-grid { grid-template-columns: 1fr; } }
+  .ned-def {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .ned-def.is-yes { border-left: 3px solid var(--forest); }
+  .ned-def.is-no { border-left: 3px solid var(--accent); }
+  .ned-def h4 { color: var(--ink); font-family: var(--sans); letter-spacing: 0; text-transform: none; font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .ned-def ul { list-style: none; padding: 0; }
+  .ned-def li { padding: 4px 0; font-size: 14px; color: var(--ink-2); }
+  .ned-def.is-yes li::before { content: '✓  '; color: var(--forest); font-weight: 600; }
+  .ned-def.is-no li::before { content: '✗  '; color: var(--accent); font-weight: 600; }
+
+  .ned-schema-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+  .ned-schema-wrap svg { width: 100%; height: auto; display: block; max-width: 700px; margin: 0 auto; }
+  .ned-node { transition: opacity 0.2s; }
+  .ned-node:hover { opacity: 0.75; }
+  .ned-schema-hint {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-top: 20px;
+    text-align: center;
+  }
+  .ned-schema-detail {
+    margin-top: 20px;
+    padding: 20px 24px;
+    background: var(--bg-warm);
+    border-radius: 2px;
+    border-left: 3px solid var(--accent);
+    display: none;
+  }
+  .ned-schema-detail.active { display: block; }
+  .ned-schema-detail h4 {
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-family: var(--sans);
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 600;
+  }
+  .ned-schema-detail p { font-size: 14px; margin: 0; }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 700px) { .roles-grid { grid-template-columns: 1fr; } }
+  .role-card {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .role-card .role-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .role-card h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0;
+  }
+  .role-card .who {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+  .role-card p { font-size: 14px; margin: 0; }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .comp-table th, .comp-table td {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .comp-table th {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: var(--bg-warm);
+  }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table td:first-child { font-weight: 600; color: var(--ink); width: 25%; }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 24px;
+    background: var(--line);
+  }
+  @media (max-width: 800px) { .timeline { grid-template-columns: 1fr; } }
+  .timeline-step {
+    background: var(--bg-card);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 180px;
+  }
+  .timeline-step .step-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .timeline-step h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+    margin: 0;
+  }
+  .timeline-step p { font-size: 13px; margin: 0; color: var(--ink-muted); }
+
+  .principles-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  @media (max-width: 700px) { .principles-list { grid-template-columns: 1fr; } }
+  .principle {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .principle-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 40px;
+  }
+  .principle-body h4 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 4px;
+  }
+  .principle-body p { font-size: 14px; margin: 0; }
+
+  .measure-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--line);
+    margin-top: 24px;
+  }
+  @media (max-width: 700px) { .measure-grid { grid-template-columns: 1fr; } }
+  .measure-cell {
+    background: var(--bg-card);
+    padding: 24px;
+  }
+  .measure-cell h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 8px;
+  }
+  .measure-cell p { font-size: 14px; margin: 0; }
+
+  /* Layout base */
+  .page { display: none; animation: fadeIn 0.35s ease-out; position: relative; z-index: 2; }
+  .page.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  section { padding: 80px 32px; }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .narrow { max-width: var(--max-narrow); margin: 0 auto; }
+
+  /* ==================== TYPO ==================== */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .eyebrow-dark { color: var(--ink-muted); }
+
+  h1.display {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  h1.display em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(26px, 3.2vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.005em;
+    margin-bottom: 12px;
+  }
+  h4 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-2); max-width: 68ch; }
+  p.lead {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 28px;
+    max-width: 62ch;
+  }
+  p.lead em { font-style: italic; color: var(--accent); }
+
+  strong { font-weight: 600; color: var(--ink); }
+  em.accent { font-style: italic; color: var(--accent); }
+
+  ul.editorial { list-style: none; padding: 0; margin-bottom: 20px; }
+  ul.editorial li {
+    padding: 12px 0 12px 28px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    color: var(--ink-2);
+  }
+  ul.editorial li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 21px;
+    width: 14px;
+    height: 1px;
+    background: var(--accent);
+  }
+  ul.editorial li:last-child { border-bottom: none; }
+
+  blockquote {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.45;
+    color: var(--ink);
+    padding: 24px 0 24px 32px;
+    border-left: 3px solid var(--accent);
+    margin: 36px 0;
+  }
+  blockquote cite {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    margin-top: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ==================== HOME ==================== */
+  .hero {
+    min-height: 88vh;
+    padding: 120px 32px 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .hero-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 36px;
+  }
+  .hero-meta span { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; }
+  .hero-aside {
+    padding: 24px;
+    border: 1px solid var(--line);
+    background: var(--bg-card);
+    border-radius: 2px;
+    box-shadow: 0 20px 60px rgba(26, 26, 26, 0.04);
+  }
+  .hero-aside h4 { color: var(--accent); margin-bottom: 12px; }
+  .hero-aside p { font-size: 14px; margin-bottom: 14px; }
+  .hero-aside .big-num {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .hero-aside .big-num em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  .audience-router {
+    background: var(--bg-warm);
+    padding: 80px 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .audience-header {
+    max-width: var(--max);
+    margin: 0 auto 48px;
+  }
+  .audience-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) {
+    .audience-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 540px) {
+    .audience-grid { grid-template-columns: 1fr; }
+  }
+  .audience-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 28px 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+    border-radius: 2px;
+  }
+  .audience-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(26, 26, 26, 0.08);
+  }
+  .audience-card .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .audience-card h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.15;
+  }
+  .audience-card p {
+    font-size: 14px;
+    margin-bottom: 0;
+    color: var(--ink-muted);
+  }
+  .audience-card .arrow {
+    margin-top: auto;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    align-self: flex-start;
+  }
+
+  /* ==================== SECTIONS INTERNES ==================== */
+  .strategic-overview {
+    padding: 120px 32px;
+    background: var(--bg);
+  }
+  .strategic-overview-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .strategic-overview-grid { grid-template-columns: 1fr; gap: 40px; } }
+
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--line);
+    margin: 40px 0;
+  }
+  @media (max-width: 900px) { .pillar-grid { grid-template-columns: repeat(2, 1fr); } }
+  .pillar {
+    background: var(--bg-card);
+    padding: 32px 24px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .pillar .num {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 56px;
+    line-height: 0.9;
+    color: var(--accent);
+  }
+  .pillar h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 19px;
+    margin: 0;
+  }
+  .pillar p { font-size: 14px; margin: 0; }
+
+  /* Pillars variants */
+  .pillar:nth-child(1) .num { color: var(--ochre); }
+  .pillar:nth-child(2) .num { color: var(--terre); }
+  .pillar:nth-child(3) .num { color: var(--forest); }
+  .pillar:nth-child(4) .num { color: var(--accent); }
+
+  /* ==================== PERSONA CARDS ==================== */
+  .persona-gallery-header {
+    padding: 100px 32px 60px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .persona-grid {
+    max-width: var(--max);
+    margin: 60px auto;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 900px) { .persona-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .persona-grid { grid-template-columns: 1fr; } }
+
+  .persona-card {
+    cursor: pointer;
+    text-align: left;
+    background: none;
+    width: 100%;
+    transition: transform 0.25s;
+  }
+  .persona-card:hover { transform: translateY(-4px); }
+  .persona-card .portrait {
+    aspect-ratio: 3/4;
+    background: var(--ochre-soft);
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    border-radius: 2px;
+  }
+  .persona-card .portrait::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 500' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.15;
+  }
+  .persona-card .tag {
+    position: relative;
+    z-index: 2;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 6px 12px;
+    border-radius: 999px;
+    align-self: flex-start;
+    margin-top: auto;
+  }
+  .persona-card h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+  .persona-card .role {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .persona-card .hook {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  /* Portrait backgrounds per persona */
+  .persona-card[data-p="aminata"] .portrait { background: linear-gradient(135deg, #F0E0BF 0%, #E4C890 100%); }
+  .persona-card[data-p="adjoua"] .portrait { background: linear-gradient(135deg, #E8D4CD 0%, #C99684 100%); }
+  .persona-card[data-p="koffi"] .portrait { background: linear-gradient(135deg, #D9E0EA 0%, #8FA6C1 100%); }
+  .persona-card[data-p="tantie"] .portrait { background: linear-gradient(135deg, #D7DFD4 0%, #8BA986 100%); }
+  .persona-card[data-p="eliane"] .portrait { background: linear-gradient(135deg, #F3D9DB 0%, #E08C92 100%); }
+  .persona-card[data-p="mariam"] .portrait { background: linear-gradient(135deg, #EBE3D4 0%, #B8A57F 100%); }
+
+  /* ==================== PERSONA DETAIL ==================== */
+  .persona-detail { padding: 80px 32px 100px; }
+  .persona-detail-header {
+    max-width: var(--max);
+    margin: 0 auto 60px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: end;
+  }
+  @media (max-width: 900px) {
+    .persona-detail-header { grid-template-columns: 1fr; gap: 30px; }
+  }
+  .persona-detail-header .portrait {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--ochre-soft), var(--ochre));
+    border-radius: 2px;
+  }
+  .persona-detail-body {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .persona-detail-body { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .persona-nav {
+    position: sticky;
+    top: 100px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .persona-nav a {
+    display: block;
+    padding: 10px 0;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--line);
+    transition: color 0.2s;
+  }
+  .persona-nav a:hover { color: var(--accent); }
+  .persona-section { margin-bottom: 60px; }
+  .persona-section h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .comb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+    margin-top: 20px;
+  }
+  @media (max-width: 700px) { .comb-grid { grid-template-columns: 1fr; } }
+  .comb-cell {
+    background: var(--bg-card);
+    padding: 24px 20px;
+  }
+  .comb-cell h4 {
+    color: var(--ink);
+    margin-bottom: 14px;
+    font-size: 13px;
+  }
+  .comb-cell:nth-child(1) h4 { color: #6A4C93; }
+  .comb-cell:nth-child(2) h4 { color: var(--blue); }
+  .comb-cell:nth-child(3) h4 { color: var(--accent); }
+  .comb-cell ul { list-style: none; }
+  .comb-cell li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.45;
+    border-bottom: 1px dashed var(--line);
+  }
+  .comb-cell li:last-child { border-bottom: none; }
+
+  /* ==================== MATRICE ==================== */
+  .matrice-filters {
+    max-width: var(--max);
+    margin: 0 auto 40px;
+    padding: 0 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+  }
+  .filter-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .filter-group label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  .filter-chip {
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: var(--bg-card);
+    transition: all 0.15s;
+  }
+  .filter-chip.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .filter-chip:hover:not(.active) {
+    border-color: var(--ink);
+  }
+
+  .tactique-list {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px 60px;
+  }
+  .tactique {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .tactique .id {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-muted);
+    padding-top: 4px;
+  }
+  .tactique-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .tactique-head h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .badge.persona-aminata { background: var(--ochre-soft); color: var(--ochre); }
+  .badge.persona-adjoua { background: var(--terre-soft); color: var(--terre); }
+  .badge.persona-koffi { background: var(--blue-soft); color: var(--blue); }
+  .badge.persona-tantie { background: var(--forest-soft); color: var(--forest); }
+  .badge.persona-eliane { background: var(--accent-soft); color: var(--accent-dark); }
+  .badge.persona-mariam { background: #F0E8C9; color: #8A7030; }
+  .badge.pilier { background: var(--ink); color: var(--bg); }
+  .badge.comb-c { background: #E0D5EF; color: #4A2D75; }
+  .badge.comb-o { background: var(--blue-soft); color: var(--blue); }
+  .badge.comb-m { background: var(--accent-soft); color: var(--accent-dark); }
+  .tactique-body {
+    font-size: 14px;
+    color: var(--ink-2);
+    max-width: none;
+  }
+  .tactique-body p { max-width: none; margin-bottom: 8px; font-size: 14px; }
+  .tactique-meta {
+    display: flex;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    margin-top: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ==================== DASHBOARD ==================== */
+  .dash-header {
+    padding: 100px 32px 40px;
+    background: var(--bg);
+  }
+  .dash-header-inner { max-width: var(--max); margin: 0 auto; }
+  .dash-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 32px 100px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .dash-grid { grid-template-columns: repeat(2, 1fr); } }
+  .dash-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 28px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+  .dash-card.span-2 { grid-column: span 2; }
+  .dash-card.span-3 { grid-column: span 3; }
+  .dash-card.span-4 { grid-column: span 4; }
+  .dash-card.span-6 { grid-column: span 6; }
+  @media (max-width: 900px) {
+    .dash-card.span-2, .dash-card.span-3, .dash-card.span-4, .dash-card.span-6 { grid-column: span 2; }
+  }
+  .dash-card h4 {
+    color: var(--ink-muted);
+    margin-bottom: 4px;
+  }
+  .dash-card .title-sm {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.25;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  .big-stat {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 72px;
+    line-height: 0.95;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .big-stat em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .stat-legend {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.4;
+  }
+  .source {
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+  }
+
+  /* Bar chart CSS */
+  .bar-list { display: flex; flex-direction: column; gap: 10px; }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 50px;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .bar-label { color: var(--ink-2); font-weight: 500; }
+  .bar-track {
+    height: 6px;
+    background: var(--bg-warm);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .bar-value {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  /* Donut */
+  .donut-wrap {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .donut-legend {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .donut-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .donut-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ==================== SERVICES ==================== */
+  .service-types {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background: var(--line);
+    margin-top: 30px;
+  }
+  @media (max-width: 900px) { .service-types { grid-template-columns: repeat(2, 1fr); } }
+  .service-type {
+    background: var(--bg-card);
+    padding: 24px;
+  }
+  .service-type h4 { color: var(--accent); }
+  .service-type h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 18px;
+    margin: 8px 0 12px;
+  }
+  .service-type p { font-size: 13px; margin: 0; color: var(--ink-muted); }
+
+  .gap-list {
+    max-width: var(--max);
+    margin: 40px auto 0;
+  }
+  .gap {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .gap .priority {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-align: center;
+  }
+  .gap .priority.urgent { background: var(--accent); color: var(--bg); }
+  .gap .priority.important { background: var(--ochre-soft); color: var(--terre); }
+  .gap .label { font-weight: 500; }
+  .gap .delai {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ==================== TOOLS ==================== */
+  .tools-grid {
+    max-width: var(--max);
+    margin: 40px auto;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  @media (max-width: 900px) { .tools-grid { grid-template-columns: 1fr; } }
+  .tool {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 32px 28px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.2s;
+  }
+  .tool:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .tool .ext {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    background: var(--bg-warm);
+    border-radius: 3px;
+    align-self: flex-start;
+    color: var(--ink-muted);
+  }
+  .tool h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 20px;
+    margin: 0;
+  }
+  .tool p { font-size: 14px; color: var(--ink-muted); margin-bottom: 0; flex: 1; }
+  .tool .dl {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    margin-top: 8px;
+  }
+  .tool .dl::after { content: ' →'; }
+
+  /* ==================== FOOTER ==================== */
+  footer {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 60px 32px 32px;
+    margin-top: 60px;
+  }
+  .footer-grid {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+  footer h4 { color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+  footer a { color: rgba(255,255,255,0.8); font-size: 14px; display: block; padding: 4px 0; }
+  footer a:hover { color: var(--bg); }
+  footer .footer-brand {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 28px;
+    font-style: italic;
+    margin-bottom: 12px;
+  }
+  footer .footer-brand em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .footer-meta {
+    max-width: var(--max);
+    margin: 24px auto 0;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.06em;
+  }
+
+  /* LOGIN screen */
+  .login-wrap {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 32px;
+  }
+  .login-box {
+    max-width: 440px;
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 48px 40px;
+    border-radius: 2px;
+  }
+  .login-box h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .login-box p { font-size: 14px; color: var(--ink-muted); margin-bottom: 24px; }
+  .login-box input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: var(--sans);
+    font-size: 14px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    margin-bottom: 12px;
+    border-radius: 2px;
+  }
+  .login-box button.submit {
+    width: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .login-box .notice {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ochre);
+    margin-top: 20px;
+    padding: 12px;
+    background: var(--ochre-soft);
+    border-radius: 2px;
+  }
+
+  /* 404 */
+  .notfound {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 32px;
+    text-align: center;
+  }
+  .notfound .big404 {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: 140px;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  /* Divider */
+  .divider-word {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 40px 0;
+    color: var(--ink-muted);
+  }
+  .divider-word::before, .divider-word::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .divider-word span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Red lines list */
+  .redlines {
+    max-width: var(--max-narrow);
+    margin: 40px auto;
+  }
+  .redline {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+  }
+  .redline .n {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 28px;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .redline h4 {
+    color: var(--ink);
+    font-size: 15px;
+    font-family: var(--sans);
+    font-weight: 600;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 6px;
+  }
+  .redline p { font-size: 14px; margin: 0; }
+
+  /* Diagonal callout */
+  .callout {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 40px 36px;
+    margin: 40px 0;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .callout::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: var(--accent);
+    transform: rotate(25deg);
+    opacity: 0.2;
+  }
+  .callout h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--bg);
+    margin-bottom: 12px;
+  }
+  .callout p { color: rgba(255,255,255,0.8); max-width: none; }
+
+  /* Circles concentric */
+  .circles-viz {
+    display: flex;
+    justify-content: center;
+    margin: 60px 0;
+    padding: 20px;
+  }
+
+  /* --------- Responsive polish ---------- */
+  @media (max-width: 700px) {
+    section { padding: 60px 24px; }
+    .hero { padding: 80px 24px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =============================================== NAV =============================================== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#/" onclick="nav('home');return false;">
+      PAMOJA<em>CI · Handbook narratif</em>
+    </a>
+    <div class="nav-links">
+      <a href="#" data-nav="strategie" onclick="nav('strategie');return false;">Stratégie</a>
+      <a href="#" data-nav="personas" onclick="nav('personas');return false;">Personas</a>
+      <a href="#" data-nav="matrice" onclick="nav('matrice');return false;">Matrice</a>
+      <a href="#" data-nav="services" onclick="nav('services');return false;">Services</a>
+      <a href="#" data-nav="dashboard" onclick="nav('dashboard');return false;">Data</a>
+      <a href="#" data-nav="outils" onclick="nav('outils');return false;">Outils</a>
+    </div>
+    <span class="nav-cta-disabled" title="Zone interne — bientôt disponible">Espace équipe</span>
+  </div>
+</nav>
+
+<!-- =============================================== HOME =============================================== -->
+<div id="home" class="page active">
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-meta">
+          <span>Côte d'Ivoire</span>
+          <span>2026</span>
+          <span>Version 2</span>
+        </div>
+        <h1 class="display">Nous ne laissons pas<br>les nôtres mourir <em>seules.</em></h1>
+        <p class="lead" style="margin-top: 40px; max-width: 560px;">
+          Ce handbook documente <em class="accent">l'application du Narrative Ecosystem Design aux campagnes du projet PAMOJA en Côte d'Ivoire</em>. Il rassemble le modèle, les personas, la matrice tactique, les services et les données qui en font un dispositif cohérent — à contester, enrichir, et faire vivre.
+        </p>
+      </div>
+      <aside class="hero-aside">
+        <h4>Le chiffre qui fonde tout</h4>
+        <div class="big-num"><em>43</em>%</div>
+        <p>des femmes ivoiriennes ayant été enceintes ont eu au moins un avortement provoqué. Elles sont partout. Elles sont nos voisines, nos sœurs, nos filles.</p>
+        <div class="source" style="margin-top: 16px;">Source · PMA 2017 Côte d'Ivoire</div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="audience-router">
+    <div class="audience-header">
+      <div class="eyebrow">Qui êtes-vous ?</div>
+      <h2>Quatre portes d'entrée dans le handbook.</h2>
+      <p style="max-width: 62ch;">Ce site s'adresse à plusieurs publics avec des besoins différents. Choisissez la porte d'entrée qui vous correspond — le contenu est le même, mais le parcours est adapté à ce que vous cherchez.</p>
+    </div>
+    <div class="audience-grid">
+      <button class="audience-card" onclick="nav('strategie')">
+        <div class="num">01 · Équipe PAMOJA</div>
+        <h3>Travailler sur un chantier précis.</h3>
+        <p>Accès rapide aux outils, briefs, personas et matrice tactique.</p>
+        <div class="arrow">→ Stratégie</div>
+      </button>
+      <button class="audience-card" onclick="nav('outils')">
+        <div class="num">02 · Partenaire producteur</div>
+        <h3>Recevoir un brief pour votre média.</h3>
+        <p>Créateurs digitaux, radios, maisons de production, OSC, leaders religieux, journalistes.</p>
+        <div class="arrow">→ Boîte à outils</div>
+      </button>
+      <button class="audience-card" onclick="nav('dashboard')">
+        <div class="num">03 · Journaliste · Chercheur</div>
+        <h3>Documenter la réalité ivoirienne.</h3>
+        <p>Chiffres sourcés, méthodologie, contacts et dossier de presse.</p>
+        <div class="arrow">→ Data & sources</div>
+      </button>
+      <button class="audience-card" onclick="nav('ned')">
+        <div class="num">04 · Bailleur · ONG</div>
+        <h3>Comprendre le modèle NED appliqué.</h3>
+        <p>Méthodologie complète, évaluation et transposabilité à d'autres contextes.</p>
+        <div class="arrow">→ Le modèle NED</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="strategic-overview">
+    <div class="strategic-overview-grid">
+      <div>
+        <div class="eyebrow eyebrow-dark">Le récit en une phrase</div>
+        <h2>Le silence autour des grossesses non désirées en CI n'est pas une protection. C'est un abandon.</h2>
+      </div>
+      <div>
+        <p class="lead">Chaque année, entre <em class="accent">209 000 et 288 000</em> avortements sont pratiqués en Côte d'Ivoire. 63% d'entre eux ne sont pas sécurisés. L'article 427 du code pénal, modifié en juin 2024, autorise désormais l'avortement sécurisé dans deux cas — danger pour la vie de la mère, et grossesse issue d'un viol. Cette loi est méconnue, y compris des professionnels de santé.</p>
+        <p>Ces chiffres ne sont pas une abstraction statistique. Ils sont le résultat d'un silence social qui empêche les femmes de chercher l'information qui les protégerait, et d'un marché clandestin (6 pages Facebook identifiées, plus de 29 000 abonnés cumulés) qui capte cette demande sans la protéger.</p>
+        <a class="nav-cta" href="#" onclick="nav('strategie');return false;" style="display: inline-block; margin-top: 20px;">Lire le cadre stratégique</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 piliers preview -->
+  <section style="padding: 80px 32px; background: var(--bg-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <div class="eyebrow eyebrow-dark">Architecture narrative</div>
+          <h2>Quatre piliers.<br>Un récit central.</h2>
+        </div>
+        <a href="#" onclick="nav('strategie');return false;" style="font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);">Détail complet →</a>
+      </div>
+      <div class="pillar-grid">
+        <div class="pillar">
+          <div class="num">01</div>
+          <h3>Réalité</h3>
+          <p>Ça arrive. Partout. À toutes. 43% des Ivoiriennes qui ont été enceintes ont avorté.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">02</div>
+          <h3>Le silence tue</h3>
+          <p>Ce n'est pas l'avortement qui tue. C'est l'avortement clandestin. 10 à 18% de la mortalité maternelle.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">03</div>
+          <h3>Compassion</h3>
+          <p>Notre culture enseigne à ne pas laisser tomber les nôtres. La foi comme la famille.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">04</div>
+          <h3>Les hommes</h3>
+          <p>Elle n'y était pas seule. Mais elle est seule à en porter le poids.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured quote -->
+  <section style="padding: 120px 32px;">
+    <div class="narrow">
+      <div class="eyebrow">Paroles de terrain</div>
+      <blockquote>
+        Tu peux pas aller en parler à tes parents. Même à ta mère tu peux pas. Tu appelles ta copine, elle connaît quelqu'un qui connaît, et voilà.
+        <cite>— Focus group femmes 20-30 ans, Abidjan · Recherche formative RAES 2024</cite>
+      </blockquote>
+      <p style="margin-top: 40px;">Ce verbatim n'est pas une anecdote. Il est le signal de ce qui constitue la moitié du problème PAMOJA CI : le parcours d'orientation des jeunes femmes en situation de grossesse non désirée passe par des maillons informels, non formés et souvent mal équipés. L'autre moitié du problème : l'offre clandestine qui a compris cette dynamique et s'y est installée.</p>
+    </div>
+  </section>
+
+  <!-- Featured tools -->
+  <section style="padding: 80px 32px; background: var(--bg-warm); border-top: 1px solid var(--line);">
+    <div class="container">
+      <div class="eyebrow eyebrow-dark">Livrables · Chantiers 1 à 4</div>
+      <h2>Dix documents de travail.<br>À contester. À enrichir.</h2>
+      <p style="margin-bottom: 32px; max-width: 62ch;">Ce handbook s'appuie sur dix livrables produits entre avril et mai 2026 : le cadre stratégique refondu, les fiches personas SBC, la matrice tactique, la cartographie des services, et six briefs acteurs individuels. Chacun est un document vivant, conçu pour être corrigé par les ateliers et le terrain.</p>
+      <a class="nav-cta" href="#" onclick="nav('outils');return false;">Voir la boîte à outils</a>
+    </div>
+  </section>
+
+</div>
+
+<!-- =============================================== STRATÉGIE =============================================== -->
+<div id="strategie" class="page">
+  <section style="padding: 100px 32px 60px;">
+    <div class="container">
+      <div class="eyebrow">Chantier 1 · Cadre stratégique refondu</div>
+      <h1>Le silence n'est pas une protection.<br><em>C'est un abandon.</em></h1>
+      <p class="lead" style="margin-top: 40px;">Le cadre stratégique est la colonne vertébrale du dispositif PAMOJA CI. Un grand récit central, quatre piliers narratifs, trois cercles concentriques d'étagement, sept lignes rouges universelles. Cette page en est la synthèse navigable — le document complet est téléchargeable dans la boîte à outils.</p>
+    </div>
+  </section>
+
+  <section style="padding: 40px 32px 80px;">
+    <div class="narrow">
+      <div class="eyebrow">Le grand récit · Formulation C</div>
+      <div class="callout">
+        <h3>En Côte d'Ivoire, nous ne laissons pas les nôtres mourir seules.</h3>
+        <p style="font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.4;">
+          Pourtant, chaque année, des centaines de femmes meurent seules d'une grossesse qu'elles ne pouvaient pas garder. Notre silence les abandonne. Notre parole peut les sauver.
+        </p>
+      </div>
+      <p>Ce récit ouvre sur une valeur ivoirienne partagée — la solidarité, le refus de l'abandon des siens — avant d'introduire la réalité. Il ne commence pas par « avortement », ni par « silence ». Il commence par <em class="accent">nous</em>. Il transforme le sujet d'un débat (pro/anti) en une question de cohérence culturelle.</p>
+      <p>Deux formulations alternatives sont testées sur des contenus pilotes : une version silence-centrée (A), et une version responsabilité-partagée (B). L'arbitrage final est prévu après monitoring de la réception terrain.</p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 32px; background: var(--bg-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="container">
+      <div class="eyebrow eyebrow-dark">Architecture en 4 piliers</div>
+      <h2>Chaque pilier est une porte d'entrée narrative.</h2>
+      <p style="max-width: 62ch; margin-bottom: 20px;">Un contenu efficace active un pilier prioritaire, parfois un second en appui. Un contenu qui tente d'activer les quatre piliers est un contenu brouillon.</p>
+      <div class="pillar-grid" style="margin-top: 40px;">
+        <div class="pillar">
+          <div class="num">01</div>
+          <h3>La réalité</h3>
+          <p><strong>Ça arrive. Partout. À toutes.</strong> 43% des femmes ivoiriennes qui ont été enceintes ont au moins un avortement derrière elles. Le tabou fait croire à une marginalité qui n'existe pas. Ce pilier normalise par les chiffres et les histoires vraies.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">02</div>
+          <h3>Le silence tue</h3>
+          <p><strong>Ce n'est pas l'avortement qui tue — c'est l'avortement clandestin.</strong> L'opération narrative la plus importante de toute la stratégie : déplacer la causalité morale. Laisser une femme mourir seule dans la clandestinité est un péché aussi, peut-être davantage.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">03</div>
+          <h3>Compassion</h3>
+          <p><strong>Notre culture enseigne à ne pas laisser tomber les nôtres.</strong> Solidarité, entraide, famille — ce sont des valeurs ivoiriennes profondes. Le silence autour de l'avortement est en contradiction avec ces valeurs.</p>
+        </div>
+        <div class="pillar">
+          <div class="num">04</div>
+          <h3>Les hommes</h3>
+          <p><strong>Elle n'y était pas seule. Mais elle est seule à en porter le poids.</strong> Nouveau pilier v2 : invitation à la responsabilité active masculine. Ton constructif — pas culpabilisateur.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 lignes rouges -->
+  <section style="padding: 100px 32px;">
+    <div class="narrow">
+      <div class="eyebrow">Règles non négociables</div>
+      <h2>Les sept lignes rouges universelles.</h2>
+      <p style="margin-bottom: 20px;">Ces règles s'appliquent à tous les contenus PAMOJA CI, sans exception. Un contenu qui franchit une ligne est corrigé avant diffusion.</p>
+      <div class="redlines">
+        <div class="redline"><div class="n">01</div><div><h4>Ne jamais commencer par le mot « avortement »</h4><p>Entrer par la situation, la femme, la conséquence.</p></div></div>
+        <div class="redline"><div class="n">02</div><div><h4>Ne jamais cadrer comme un débat pro-choix/anti-avortement</h4><p>Cadrer autour de valeurs ivoiriennes partagées.</p></div></div>
+        <div class="redline"><div class="n">03</div><div><h4>Ne jamais nier la dimension morale et religieuse</h4><p>L'intégrer, la retourner, jamais l'ignorer. 82% de la population est croyante.</p></div></div>
+        <div class="redline"><div class="n">04</div><div><h4>Ne jamais placer « la femme qui a avorté » en figure centrale initiale</h4><p>Entrer par les conséquences, la situation, l'entourage.</p></div></div>
+        <div class="redline"><div class="n">05</div><div><h4>Ne jamais utiliser le vocabulaire ONG ou des droits internationaux</h4><p>Parler ivoirien. Pas « autonomie corporelle » ou « SDSR ».</p></div></div>
+        <div class="redline"><div class="n">06</div><div><h4>Ne jamais faire de l'humour frontal sur l'avortement</h4><p>L'humour sur les sujets connexes (contraception, couple) est possible.</p></div></div>
+        <div class="redline"><div class="n">07</div><div><h4>Ne jamais cadrer la responsabilité masculine en accusation collective</h4><p>« Qu'est-ce que toi tu fais ? » ouvre. « Tous coupables » ferme.</p></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =============================================== NED =============================================== -->
+<div id="ned" class="page">
+  <section style="padding: 80px 32px 40px;">
+    <div class="container">
+      <div class="eyebrow">Le modèle</div>
+      <h1 class="display">NED — <em>Narrative<br>Ecosystem Design.</em></h1>
+      <p class="lead" style="max-width: 62ch; margin-top: 30px;">
+        Le NED est une discipline d'architecture d'infrastructure narrative. Le projet PAMOJA en Côte d'Ivoire en est <em class="accent">une application</em> — pas une incarnation unique. Cette page décrit le modèle lui-même, ses rôles, ses principes et sa mesure.
+      </p>
+    </div>
+  </section>
+
+  <div class="ned-toc">
+    <div class="ned-toc-inner">
+      <a onclick="scrollToNED('ned-s1')">01 Définition</a>
+      <a onclick="scrollToNED('ned-s2')">02 Architecture</a>
+      <a onclick="scrollToNED('ned-s3')">03 Rôles</a>
+      <a onclick="scrollToNED('ned-s4')">04 Gouvernance</a>
+      <a onclick="scrollToNED('ned-s5')">05 Principes</a>
+      <a onclick="scrollToNED('ned-s6')">06 Mesure</a>
+      <a onclick="scrollToNED('ned-s7')">07 Distinction</a>
+      <a onclick="scrollToNED('ned-s8')">08 Cycle</a>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s1">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">01<small>Définition</small></div>
+      <div>
+        <h2>Ce que le NED est — et ce qu'il n'est pas.</h2>
+        <p>Le Narrative Ecosystem Design est une discipline d'architecture d'infrastructure narrative. Il vise à faire émerger, stabiliser et diffuser des narratifs dominants favorables à un changement social ou comportemental, à travers l'orchestration d'un écosystème interconnecté d'acteurs, de récits, de plateformes et de dynamiques sociales.</p>
+        <p>Il emprunte à plusieurs traditions sans se confondre avec elles : au recadrage narratif de FrameWorks Institute, à la convergence culturelle documentée par le Norman Lear Center, au Social Behavior Change classique sur les comportements et normes, à la pensée systémique appliquée aux récits.</p>
+        <div class="ned-def-grid">
+          <div class="ned-def is-yes">
+            <h4>Le NED EST</h4>
+            <ul>
+              <li>Une discipline en développement</li>
+              <li>Une grammaire d'architecture d'écosystème</li>
+              <li>Un ensemble de principes et de méthodes</li>
+              <li>Transposable à différents contextes et sujets</li>
+            </ul>
+          </div>
+          <div class="ned-def is-no">
+            <h4>Le NED n'EST PAS</h4>
+            <ul>
+              <li>Une méthodologie de brief créatif</li>
+              <li>Une stratégie de campagne 360</li>
+              <li>Une théorie académique stabilisée</li>
+              <li>Un livrable final ou une marque de projet</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s2">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">02<small>Architecture</small></div>
+      <div>
+        <h2>Les cinq niveaux de l'architecture narrative.</h2>
+        <p>Un écosystème narratif bien conçu s'organise en cinq niveaux emboîtés, du plus diffus au plus tangible. La cohérence se joue dans la <em class="accent">convergence morale</em> entre les niveaux — pas dans l'uniformité éditoriale.</p>
+        <div class="ned-schema-wrap">
+          <svg viewBox="0 0 700 480" xmlns="http://www.w3.org/2000/svg" aria-label="Architecture NED - 5 niveaux emboîtés">
+            <defs>
+              <marker id="na2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M2 1L8 5L2 9" fill="none" stroke="#786F66" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </marker>
+            </defs>
+            <rect x="30" y="30" width="560" height="420" rx="20" fill="#F3D9DB" stroke="#D0454C" stroke-width="1" stroke-dasharray="4 4" opacity="0.4" class="ned-node" data-key="nuage" style="cursor: pointer;" onclick="showNEDDetail('nuage')"/>
+            <text x="310" y="54" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#A7383E" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">NIVEAU 5 — NUAGE NARRATIF</text>
+            <rect x="60" y="72" width="500" height="360" rx="14" fill="#FDECEF" stroke="#D0454C" stroke-width="1" class="ned-node" data-key="recit" style="cursor: pointer;" onclick="showNEDDetail('recit')"/>
+            <text x="310" y="94" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#A7383E" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">NIVEAU 4 — GRAND RÉCIT · BOUSSOLE MORALE</text>
+            <rect x="90" y="114" width="440" height="300" rx="12" fill="#FFFFFF" stroke="#A8998B" stroke-width="1" class="ned-node" data-key="piliers" style="cursor: pointer;" onclick="showNEDDetail('piliers')"/>
+            <text x="310" y="136" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#786F66" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">NIVEAU 3 — PILIERS NARRATIFS</text>
+            <rect x="120" y="156" width="380" height="240" rx="10" fill="#EBE3D4" stroke="#A8998B" stroke-width="1" class="ned-node" data-key="cercles" style="cursor: pointer;" onclick="showNEDDetail('cercles')"/>
+            <text x="310" y="178" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#786F66" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">NIVEAU 2 — CERCLES CONCENTRIQUES</text>
+            <rect x="150" y="198" width="320" height="180" rx="8" fill="#F4EFE6" stroke="#1A1A1A" stroke-width="1" class="ned-node" data-key="tactiques" style="cursor: pointer;" onclick="showNEDDetail('tactiques')"/>
+            <text x="310" y="220" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#3E3731" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">NIVEAU 1 — TACTIQUES + ATTERRISSAGES</text>
+            <text x="310" y="260" text-anchor="middle" font-family="Fraunces, serif" font-size="22" fill="#1A1A1A" font-weight="400" font-style="italic" style="pointer-events: none;">Un contenu · un format</text>
+            <text x="310" y="290" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#786F66" style="pointer-events: none;">TikTok, radio, prêche, atelier,</text>
+            <text x="310" y="310" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#786F66" style="pointer-events: none;">podcast, article — avec un</text>
+            <text x="310" y="330" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#786F66" style="pointer-events: none;">atterrissage concret réel.</text>
+            <text x="310" y="358" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#D0454C" font-weight="500" letter-spacing="1.2" style="pointer-events: none;">CLIQUEZ CHAQUE NIVEAU</text>
+            <path d="M 595 240 Q 660 240 660 110 Q 660 50 610 50" fill="none" stroke="#786F66" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#na2)"/>
+            <text x="670" y="148" text-anchor="start" font-family="IBM Plex Mono, monospace" font-size="9" fill="#786F66" letter-spacing="1.0" style="pointer-events: none;">
+              <tspan x="670" dy="0">MONITORING</tspan>
+              <tspan x="670" dy="14">SIGNAUX</tspan>
+              <tspan x="670" dy="14">AJUSTEMENT</tspan>
+            </text>
+          </svg>
+          <div class="ned-schema-hint">Cliquez sur chaque niveau pour voir son rôle.</div>
+          <div id="ned-schema-detail" class="ned-schema-detail">
+            <h4 id="ned-schema-title">—</h4>
+            <p id="ned-schema-desc">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s3">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">03<small>Rôles</small></div>
+      <div>
+        <h2>Quatre rôles dans un écosystème NED.</h2>
+        <p>Un NED vivant s'organise autour de quatre rôles interdépendants. La clarté de ces rôles est la condition de la non-redondance — et de la non-dépendance à une structure centrale qui tenterait de tout contrôler.</p>
+        <div class="roles-grid">
+          <div class="role-card">
+            <div class="role-tag">Rôle · 01</div>
+            <h4>L'architecte</h4>
+            <div class="who">Dans PAMOJA CI : RAES</div>
+            <p>Dessine l'écosystème, définit le cadre stratégique, identifie les acteurs, valide la cohérence morale de l'ensemble. Ne produit pas les contenus — il orchestre ceux qui les produisent.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-tag">Rôle · 02</div>
+            <h4>Le laboratoire</h4>
+            <div class="who">Dans PAMOJA CI : OASIS</div>
+            <p>Recherche, test, mesure, affine la méthodologie. Remonte les signaux faibles, documente les apprentissages, ajuste le modèle au fil des cycles. Garde-fou contre la rigidité du cadre.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-tag">Rôle · 03</div>
+            <h4>Les producteurs</h4>
+            <div class="who">Dans PAMOJA CI : 6 catégories d'acteurs</div>
+            <p>Créent les contenus, portent les récits dans leurs médias. Autonomes dans leur créativité, alignés sur la boussole morale partagée. Créateurs digitaux, équipes radio, maisons de production, OSC, leaders religieux, journalistes.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-tag">Rôle · 04</div>
+            <h4>Les destinataires</h4>
+            <div class="who">Dans PAMOJA CI : 6 personas</div>
+            <p>Pas passifs. À mesure que les normes se déplacent, certains destinataires deviennent relais (Tantie Affoué, Pasteur Mariam). L'écosystème se renforce par cette conversion — condition de sa résilience sans contrôle central.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s4">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">04<small>Gouvernance</small></div>
+      <div>
+        <h2>Trois niveaux de gouvernance à ne pas confondre.</h2>
+        <p>La confusion entre « le NED » et « PAMOJA CI » est fréquente — et elle brouille la conversation avec les bailleurs, les partenaires et les équipes. Trois niveaux distincts cohabitent :</p>
+        <ul class="editorial">
+          <li><strong>Discipline — Le NED.</strong> Corpus méthodologique en développement, porté par RAES / OASIS. Transposable à d'autres contextes, d'autres sujets, d'autres pays. Non propriétaire au projet PAMOJA.</li>
+          <li><strong>Application — Le projet PAMOJA en Côte d'Ivoire.</strong> Le cadre, la matrice, les briefs, les services, les livrables. Application du NED au contexte ivoirien SSR. C'est le périmètre de ce handbook.</li>
+          <li><strong>Cycles — Les campagnes annuelles.</strong> 2026, 2027, 2028. Chaque cycle produit apprentissage et ajustement — du cadre local (application) et du modèle (discipline).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s5">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">05<small>Principes</small></div>
+      <div>
+        <h2>Cinq principes méthodologiques.</h2>
+        <p>Ce qui distingue un écosystème narratif bien conçu d'une campagne standard — et qui guide les décisions dans l'ambiguïté.</p>
+        <div class="principles-list">
+          <div class="principle">
+            <div class="principle-num">i.</div>
+            <div class="principle-body">
+              <h4>Convergence avant contrôle</h4>
+              <p>On ne contrôle pas chaque contenu. On s'assure que l'écosystème produit des contenus moralement convergents. La cohérence passe par la boussole morale partagée, pas par un comité de validation.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="principle-num">ii.</div>
+            <div class="principle-body">
+              <h4>Densité avant viralité</h4>
+              <p>Un nuage narratif efficace est permanent et dense. La viralité ponctuelle ne déplace pas les normes. Vingt contenus moyens alignés déplacent plus qu'un contenu viral isolé.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="principle-num">iii.</div>
+            <div class="principle-body">
+              <h4>Atterrissage avant diffusion</h4>
+              <p>Créer de la demande sans points d'atterrissage réels amplifie les circuits clandestins. L'écosystème de services doit être aussi cartographié que l'écosystème narratif.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="principle-num">iv.</div>
+            <div class="principle-body">
+              <h4>Boussole morale avant ligne éditoriale</h4>
+              <p>La cohérence se fait sur les valeurs sous-jacentes, pas sur la charte de style. Un pasteur, un TikTokeur et un journaliste peuvent dire la même chose avec des mots différents si la boussole est partagée.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <div class="principle-num">v.</div>
+            <div class="principle-body">
+              <h4>Cycle long avant coup unique</h4>
+              <p>Un NED se mesure en années, pas en saisons. Les campagnes sont des moments d'intensification — l'infrastructure continue entre les cycles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s6">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">06<small>Mesure</small></div>
+      <div>
+        <h2>Comment se mesure un écosystème narratif.</h2>
+        <p>Les indicateurs tactiques (vues, reach, engagement) restent utiles pour piloter les tactiques individuelles. Mais ils ne mesurent pas le NED. Quatre indicateurs stratégiques le mesurent.</p>
+        <div class="measure-grid">
+          <div class="measure-cell">
+            <h4>Densité narrative</h4>
+            <p>Volume de contenus moralement convergents qui circulent en autonomie, y compris ceux que RAES n'a pas produits ou validés directement. Indicateur de santé de l'écosystème.</p>
+          </div>
+          <div class="measure-cell">
+            <h4>Déplacement des normes</h4>
+            <p>Mesuré par social listening répété et recherche qualitative à intervalles réguliers. Les normes sociales se déplacent lentement — le suivi doit être patient et long.</p>
+          </div>
+          <div class="measure-cell">
+            <h4>Absorption par les atterrissages</h4>
+            <p>Ratio entre la demande créée par les contenus et la demande effectivement absorbée par les services formels sûrs. Un ratio faible signale une campagne dangereuse.</p>
+          </div>
+          <div class="measure-cell">
+            <h4>Résilience de l'infrastructure</h4>
+            <p>Capacité du système à continuer à produire des récits convergents sans intervention centrale. Mesurée par la persistance des productions entre les cycles d'intensification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s7">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">07<small>Distinction</small></div>
+      <div>
+        <h2>Ce qui distingue le NED d'approches comparables.</h2>
+        <p>Le NED emprunte à plusieurs traditions — mais il ne s'y réduit pas. Voici les différences structurantes avec les approches qu'on confond souvent avec lui.</p>
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Approche</th>
+              <th>Focus principal</th>
+              <th>Différence avec le NED</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SBC classique</td>
+              <td>Comportements et normes chez un public défini</td>
+              <td>Le NED travaille l'infrastructure narrative <em>en amont</em> des comportements. Le SBC reste un composant du NED, pas un substitut.</td>
+            </tr>
+            <tr>
+              <td>Communication 360</td>
+              <td>Cohérence multicanaux d'un message unique</td>
+              <td>Le NED orchestre des récits portés par des acteurs divers avec leur voix propre — pas un message unifié. La diversité des voix est une force, pas un bug.</td>
+            </tr>
+            <tr>
+              <td>Advocacy / plaidoyer</td>
+              <td>Faire bouger les décideurs sur une politique précise</td>
+              <td>Le NED travaille l'environnement culturel qui rend possible l'acceptation des plaidoyers — il précède et nourrit l'advocacy.</td>
+            </tr>
+            <tr>
+              <td>Brand campaign</td>
+              <td>Identité et notoriété d'une marque</td>
+              <td>Le NED ne porte pas de marque, il porte des récits partagés. Un acteur PAMOJA peut être invisible pour l'audience finale.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ned-section" id="ned-s8">
+    <div class="ned-section-grid">
+      <div class="ned-section-num">08<small>Cycle</small></div>
+      <div>
+        <h2>Le cycle de vie d'une application NED.</h2>
+        <p>Un NED appliqué ne se déploie pas en une campagne. Il suit un cycle long qui combine des moments d'intensification (les campagnes annuelles) et des périodes d'infrastructure qui continue entre les cycles.</p>
+        <div class="timeline">
+          <div class="timeline-step">
+            <div class="step-time">Avant · 6-12 mois</div>
+            <h4>Diagnostic</h4>
+            <p>Cartographie narrative, cartographie acteurs, cadre stratégique, matrice tactique, cartographie des services d'atterrissage. C'est là où le projet PAMOJA en CI se trouve aujourd'hui.</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-time">Pendant · 3-6 mois</div>
+            <h4>Intensification</h4>
+            <p>Activation coordonnée des producteurs, monitoring continu des signaux, ajustements tactiques. Les contenus circulent, les normes commencent à bouger.</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-time">Après · 6-12 mois</div>
+            <h4>Capitalisation</h4>
+            <p>Évaluation, retours terrain, ajustement du cadre et du modèle. Préparation du cycle suivant avec les apprentissages intégrés.</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-time">Long terme · 3-5 ans</div>
+            <h4>Infrastructure</h4>
+            <p>L'écosystème continue à produire des récits convergents entre les cycles. Les Tanties formées restent formées. Les leaders progressistes continuent de prêcher. Les médias traitent le sujet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- =============================================== PERSONAS =============================================== -->
+<div id="personas" class="page">
+  <section class="persona-gallery-header">
+    <div class="container">
+      <div class="eyebrow">Chantier 2 · Fiches SBC</div>
+      <h1>Six personas.<br>Six points d'entrée <em>dans la vie des gens.</em></h1>
+      <p class="lead" style="max-width: 62ch;">Les personas ne sont pas des cibles marketing. Ce sont des portraits composites, ancrés dans la recherche formative, conçus pour que chaque acteur PAMOJA CI sache à qui il parle, avec quels comportements, quelles normes, quelles barrières.</p>
+    </div>
+  </section>
+
+  <div class="persona-grid">
+    <button class="persona-card" data-p="aminata" onclick="nav('persona-aminata')">
+      <div class="portrait"><span class="tag">Concernée directe</span></div>
+      <h3>Aminata</h3>
+      <div class="role">22 ans · Étudiante · Abidjan</div>
+      <p class="hook">« Tu peux pas aller en parler à tes parents. Tu appelles ta copine, elle connaît quelqu'un qui connaît, et voilà. »</p>
+    </button>
+    <button class="persona-card" data-p="adjoua" onclick="nav('persona-adjoua')">
+      <div class="portrait"><span class="tag">Relais communautaire</span></div>
+      <h3>Adjoua</h3>
+      <div class="role">38 ans · Commerçante · Yopougon</div>
+      <p class="hook">« Chez nous, ce genre de choses on n'en parle pas. Mais quand ma nièce m'a appelée en pleurant... »</p>
+    </button>
+    <button class="persona-card" data-p="koffi" onclick="nav('persona-koffi')">
+      <div class="portrait"><span class="tag">Nouveau pilier 4</span></div>
+      <h3>Koffi</h3>
+      <div class="role">28 ans · Salarié · Abidjan</div>
+      <p class="hook">« Les contraceptifs, c'est l'affaire des femmes. Si elle tombe enceinte, elle n'a qu'à faire attention. »</p>
+    </button>
+    <button class="persona-card" data-p="tantie" onclick="nav('persona-tantie')">
+      <div class="portrait"><span class="tag">Nouveau persona v2</span></div>
+      <h3>Tantie Affoué</h3>
+      <div class="role">45 ans · Confidente pivot</div>
+      <p class="hook">« Quand ma petite sœur m'a appelée, je savais qui appeler. D'autres tanties, non — et il y a des drames. »</p>
+    </button>
+    <button class="persona-card" data-p="eliane" onclick="nav('persona-eliane')">
+      <div class="portrait"><span class="tag">Professionnelle de santé</span></div>
+      <h3>Dr Éliane</h3>
+      <div class="role">42 ans · Gynécologue-obstétricienne</div>
+      <p class="hook">« La loi dit une chose, mais dans les faits on ne pratique pas. Les collègues ont peur. »</p>
+    </button>
+    <button class="persona-card" data-p="mariam" onclick="nav('persona-mariam')">
+      <div class="portrait"><span class="tag">Leader progressiste</span></div>
+      <h3>Pasteur Mariam</h3>
+      <div class="role">50 ans · Leader religieuse</div>
+      <p class="hook">« La vraie fidélité aux textes commande la compassion. Laisser mourir n'est pas un acte de foi. »</p>
+    </button>
+  </div>
+</div>
+
+<!-- =============================================== PERSONA DETAIL - AMINATA =============================================== -->
+<div id="persona-aminata" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Aminata.<br><em>La jeune femme concernée.</em></h1>
+        <p class="lead">22 ans, étudiante ou jeune active à Abidjan, smartphone permanent, connectée en TikTok et WhatsApp. Elle est, sera, ou connaît quelqu'un qui est confrontée à une grossesse non désirée. Elle est le cœur de cible de la campagne digitale 2026.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #F0E0BF 0%, #C6892E 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Persona #01</span>
+      </div>
+    </div>
+
+    <div class="persona-detail-body">
+      <nav class="persona-nav">
+        <a href="#verbatim">Verbatim</a>
+        <a href="#comportements">Comportements</a>
+        <a href="#normes">Normes</a>
+        <a href="#comb">COM-B</a>
+        <a href="#leviers">Leviers</a>
+      </nav>
+      <div>
+        <div class="persona-section" id="verbatim">
+          <blockquote>Tu peux pas aller en parler à tes parents. Même à ta mère tu peux pas. Tu appelles ta copine, elle connaît quelqu'un qui connaît, et voilà.
+            <cite>FG femmes 20-30 ans, Abidjan — Recherche formative RAES 2024</cite>
+          </blockquote>
+        </div>
+
+        <div class="persona-section" id="comportements">
+          <h2>Comportements observés vs comportements cibles.</h2>
+          <p>Ce que fait Aminata aujourd'hui quand elle est confrontée à une grossesse non désirée : elle Google « comment faire un avortement », elle appelle une copine, elle va tester la bonne volonté d'un pharmacien de quartier. Elle ne consulte pas AIBEF. Elle ne connaît pas l'article 427 nouveau.</p>
+          <p>Ce qu'on veut voir émerger : chercher l'information fiable avant d'être en situation critique, connaître au moins un point d'atterrissage sûr, parler à une amie de confiance sans honte, consulter un service avant toute auto-médication.</p>
+        </div>
+
+        <div class="persona-section" id="normes">
+          <h2>Normes sociales à déplacer.</h2>
+          <ul class="editorial">
+            <li><strong>« Personne n'en parle, je suis la seule. »</strong> → Les 43% sont statistiquement invisibles parce que socialement invisibilisées. Le pilier 1 travaille cette norme descriptive.</li>
+            <li><strong>« Une fille bien ne se retrouve pas dans cette situation. »</strong> → Le victim-blaming massivement observé dans les commentaires PCTC doit être retourné par le pilier 3.</li>
+            <li><strong>« Chercher l'info c'est louche. »</strong> → Reconfigurer en « chercher l'info c'est être responsable, pas faible ».</li>
+          </ul>
+        </div>
+
+        <div class="persona-section" id="comb">
+          <h2>Barrières COM-B.</h2>
+          <div class="comb-grid">
+            <div class="comb-cell">
+              <h4>Capacité (C)</h4>
+              <ul>
+                <li>Ne connaît pas l'article 427 nouveau.</li>
+                <li>Ne connaît pas les services AIBEF.</li>
+                <li>Manque de vocabulaire SSR sans gêne.</li>
+                <li>Ne sait pas distinguer info fiable / désinformation.</li>
+              </ul>
+            </div>
+            <div class="comb-cell">
+              <h4>Opportunité (O)</h4>
+              <ul>
+                <li>Vit loin d'un centre AIBEF (6 centres hors Abidjan).</li>
+                <li>Pas de ligne verte francophone accessible.</li>
+                <li>Pas de confidente formée aux bonnes orientations.</li>
+                <li>Stigmatisation du personnel dans services publics.</li>
+              </ul>
+            </div>
+            <div class="comb-cell">
+              <h4>Motivation (M)</h4>
+              <ul>
+                <li>Peur d'être jugée (famille, amis).</li>
+                <li>Honte anticipée.</li>
+                <li>Culpabilité religieuse intériorisée.</li>
+                <li>Conviction d'être la seule.</li>
+                <li>Peur de la sanction pénale (méconnaissance).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="persona-section" id="leviers">
+          <h2>Leviers narratifs activables.</h2>
+          <p><strong>Piliers :</strong> P1 (Réalité) en priorité, P2 (Silence tue) en second.<br>
+          <strong>Cercle :</strong> C2 (connexes) pour entrer — contraception, amitié, confidence. Jamais C1 en ouverture.<br>
+          <strong>Grand récit :</strong> Formulation A (Silence-centrée) fonctionne en format court. Formulation C en long-format.<br>
+          <strong>Formats :</strong> TikTok court bilingue, carrousels Instagram d'info pratique, témoignages anonymisés en stories, podcast court, radios jeunes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Other persona pages en squelette -->
+<div id="persona-adjoua" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Adjoua.<br><em>La femme mûre communautaire.</em></h1>
+        <p class="lead">38 ans, commerçante au marché de Yopougon, mariée, 3 enfants. Elle n'est plus directement concernée par la grossesse non désirée, mais elle est une figure d'autorité morale informelle. Ses nièces, ses filles, ses voisines l'écoutent. Ce qu'elle transmet devient la norme du quartier.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #E8D4CD 0%, #7C3A28 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Persona #02</span>
+      </div>
+    </div>
+    <div class="narrow" style="margin-top: 60px;">
+      <blockquote>Chez nous, ce genre de choses on n'en parle pas. Mais quand ma nièce m'a appelée en pleurant, j'ai dû l'emmener quelque part. Je ne savais pas où. Heureusement que ma voisine connaissait une sage-femme.
+        <cite>FG femmes 35-50 ans, Abobo — Recherche formative RAES 2024</cite>
+      </blockquote>
+      <p style="margin-top: 40px;"><strong>Pilier dédié :</strong> P3 Compassion. Adjoua a inspiré la formulation C du grand récit. « Nous ne laissons pas les nôtres mourir seules » parle directement à ses valeurs.</p>
+      <p><strong>Leviers :</strong> Radio (magazine santé, théâtre radio, radio religieuse), contenus WhatsApp relayés par ses filles, tontines engagées, intervention de leaders religieux progressistes.</p>
+      <p style="margin-top: 24px;"><em>Fiche complète disponible dans le document téléchargeable « Fiches Personas SBC v1 ».</em></p>
+    </div>
+  </section>
+</div>
+
+<div id="persona-koffi" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Koffi.<br><em>Le partenaire. Le père potentiel.</em></h1>
+        <p class="lead">28 ans, salarié du privé ou informel à Abidjan, smartphone permanent, ne parle jamais de contraception en privé ni en public. L'audience la plus sous-exploitée de tout l'écosystème SBC en Côte d'Ivoire. Le pilier 4 est construit pour lui.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #D9E0EA 0%, #1F3A5F 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Persona #03</span>
+      </div>
+    </div>
+    <div class="narrow" style="margin-top: 60px;">
+      <blockquote>Les contraceptifs, c'est l'affaire des femmes. Nous les hommes, si elle tombe enceinte, c'est qu'elle a fait exprès ou qu'elle n'a pas fait attention.
+        <cite>Commentaire PCTC, homme anonyme, avril 2025</cite>
+      </blockquote>
+      <p style="margin-top: 40px;"><strong>Pilier dédié :</strong> P4 Hommes. Invitation à la responsabilité active — pas accusation collective. « Un vrai homme, c'est celui qui est là quand ça compte. »</p>
+      <p><strong>Leviers :</strong> Podcast entre hommes (modèle Roe vs Bros), capsules humoristiques portées par comique ivoirien respecté, interviews footballeurs / artistes modèles, WhatsApp groupes masculins.</p>
+      <p style="margin-top: 24px;"><em>Fiche complète disponible dans le document téléchargeable « Fiches Personas SBC v1 ».</em></p>
+    </div>
+  </section>
+</div>
+
+<div id="persona-tantie" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Tantie Affoué.<br><em>La confidente pivot.</em></h1>
+        <p class="lead">Entre 30 et 50 ans, tante, cousine aînée, grande sœur, marraine. Souvent consultée en premier dans les confidences familiales. Nouveau persona v2 — l'ignorer en v1 revenait à traiter la moitié du problème.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #D7DFD4 0%, #3F5B3C 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Nouveau persona v2</span>
+      </div>
+    </div>
+    <div class="narrow" style="margin-top: 60px;">
+      <blockquote>Moi quand ma petite sœur m'a appelée, je savais qui appeler. Mais je sais que d'autres tantes, elles envoient directement chez la sage-femme du quartier, et après il y a des drames. On n'est pas formées pour ça.
+        <cite>Composite FG femmes 35-50 ans, Abobo et Cocody</cite>
+      </blockquote>
+      <p style="margin-top: 40px;"><strong>Enjeu stratégique :</strong> une Aminata bien informée qui tombe sur une mauvaise Tantie Affoué, c'est un drame. Une Aminata mal informée qui tombe sur une bonne Tantie, peut s'en sortir. L'investissement prioritaire doit aller vers ce persona.</p>
+      <p><strong>Leviers :</strong> réseau WhatsApp « Tanties ressources » fermé, kit d'orientation version poche, ateliers VCAT communautaires, formation par mentorat pair-à-pair. Cible : 50 tanties certifiées fin 2026.</p>
+      <p style="margin-top: 24px;"><em>Fiche complète disponible dans le document téléchargeable « Fiches Personas SBC v1 ».</em></p>
+    </div>
+  </section>
+</div>
+
+<div id="persona-eliane" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Dr Éliane.<br><em>La professionnelle de santé.</em></h1>
+        <p class="lead">42 ans, gynécologue-obstétricienne, pratique publique et privée, membre SOGOCI. Doublement critique : point d'atterrissage ultime et voix institutionnelle qui peut promouvoir ou bloquer l'application de l'article 427.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #F3D9DB 0%, #A7383E 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Persona #05</span>
+      </div>
+    </div>
+    <div class="narrow" style="margin-top: 60px;">
+      <blockquote>La loi dit une chose, mais dans les faits on ne pratique pas. Les collègues ont peur. Moi-même je ne suis pas sûre de ce qui est légal ou pas avec le nouvel article.
+        <cite>Entretien professionnel de santé — Recherche formative RAES 2024</cite>
+      </blockquote>
+      <p style="margin-top: 40px;"><strong>Intelligence critique :</strong> les lignes directrices cliniques SOGOCI en cours de rédaction (workshop C4 avril 2026). Va-t-elle inclure le task-shifting OMS ? Si non, les services article 427 seront inaccessibles en zones rurales.</p>
+      <p><strong>Leviers :</strong> note juridique 2 pages article 427 (à produire avec AFJCI), webinaire de formation continue, communauté de pratique SOGOCI progressiste, plaidoyer interne aux guidelines.</p>
+      <p style="margin-top: 24px;"><em>Fiche complète disponible dans le document téléchargeable « Fiches Personas SBC v1 ».</em></p>
+    </div>
+  </section>
+</div>
+
+<div id="persona-mariam" class="page">
+  <section class="persona-detail">
+    <div class="persona-detail-header">
+      <div>
+        <div class="eyebrow"><a href="#" onclick="nav('personas');return false;" style="color: var(--accent);">← Tous les personas</a></div>
+        <h1>Pasteur Mariam.<br><em>La leader religieuse progressiste.</em></h1>
+        <p class="lead">50 ans, pasteur(e), imam(e) progressiste ou catéchiste formée. Autorité morale reconnue d'une communauté de 200 à 2 000 fidèles. Profil minoritaire mais stratégiquement décisif : une voix religieuse de compassion désamorce 80% de l'opposition potentielle.</p>
+      </div>
+      <div class="portrait" style="background: linear-gradient(135deg, #EBE3D4 0%, #8A7030 100%); display: flex; align-items: flex-end; padding: 30px; border-radius: 2px;">
+        <span style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--ink); color: var(--bg); padding: 6px 12px; border-radius: 999px;">Persona #06</span>
+      </div>
+    </div>
+    <div class="narrow" style="margin-top: 60px;">
+      <blockquote>Jésus n'a jamais parlé de l'avortement. Il a parlé de la compassion pour les femmes, de la protection des plus faibles. Ma conviction : l'avortement clandestin est le vrai péché.
+        <cite>Composite inspiré de Catholics for Choice et entretiens religieux — RAES 2024</cite>
+      </blockquote>
+      <p style="margin-top: 40px;"><strong>Point d'ancrage identifié :</strong> Pasteur Kouadio Yeboua (Église Christ des Nations), Secrétaire Action Contre la Grossesse Non-Désirée et à Risques.</p>
+      <p><strong>Leviers :</strong> formation VCAT religieuse (Catholics for Choice adapté), pool de prêches progressistes, passages radio religieuse grand public, réseau formalisé de 10-20 leaders d'ici fin 2026, déclaration publique collective.</p>
+      <p style="margin-top: 24px;"><em>Fiche complète disponible dans le document téléchargeable « Fiches Personas SBC v1 ».</em></p>
+    </div>
+  </section>
+</div>
+
+<!-- =============================================== MATRICE =============================================== -->
+<div id="matrice" class="page">
+  <section style="padding: 100px 32px 40px;">
+    <div class="container">
+      <div class="eyebrow">Chantier 2 · Matrice tactique SBC</div>
+      <h1>Cinquante tactiques.<br><em>Filtrer. Trier. Contester.</em></h1>
+      <p class="lead" style="max-width: 62ch;">Cette matrice croise les 6 personas avec les formats opérationnels PAMOJA 2026. Chaque ligne est une tactique actionnable — comportement cible, norme travaillée, angle narratif, atterrissage. Outil de travail vivant, conçu pour être enrichi et corrigé en atelier.</p>
+    </div>
+  </section>
+
+  <div class="matrice-filters">
+    <div class="filter-group">
+      <label>Persona</label>
+      <button class="filter-chip active" data-f="persona" data-v="all">Tous</button>
+      <button class="filter-chip" data-f="persona" data-v="aminata">Aminata</button>
+      <button class="filter-chip" data-f="persona" data-v="adjoua">Adjoua</button>
+      <button class="filter-chip" data-f="persona" data-v="koffi">Koffi</button>
+      <button class="filter-chip" data-f="persona" data-v="tantie">Tantie Affoué</button>
+      <button class="filter-chip" data-f="persona" data-v="eliane">Dr Éliane</button>
+      <button class="filter-chip" data-f="persona" data-v="mariam">Pasteur Mariam</button>
+    </div>
+    <div class="filter-group">
+      <label>Pilier</label>
+      <button class="filter-chip active" data-f="pilier" data-v="all">Tous</button>
+      <button class="filter-chip" data-f="pilier" data-v="P1">P1</button>
+      <button class="filter-chip" data-f="pilier" data-v="P2">P2</button>
+      <button class="filter-chip" data-f="pilier" data-v="P3">P3</button>
+      <button class="filter-chip" data-f="pilier" data-v="P4">P4</button>
+    </div>
+    <div class="filter-group">
+      <label>COM-B</label>
+      <button class="filter-chip active" data-f="comb" data-v="all">Tous</button>
+      <button class="filter-chip" data-f="comb" data-v="C">Capacité</button>
+      <button class="filter-chip" data-f="comb" data-v="O">Opportunité</button>
+      <button class="filter-chip" data-f="comb" data-v="M">Motivation</button>
+    </div>
+  </div>
+
+  <div class="tactique-list" id="tactique-list"></div>
+</div>
+
+<!-- =============================================== SERVICES =============================================== -->
+<div id="services" class="page">
+  <section style="padding: 100px 32px 60px;">
+    <div class="container">
+      <div class="eyebrow">Chantier 3 · Services & atterrissages</div>
+      <h1>Où atterrissent<br>les <em>personnes ?</em></h1>
+      <p class="lead" style="max-width: 62ch;">Un contenu narratif qui n'emmène nulle part renforce la confusion. Cette section cartographie les points d'atterrissage réels — services cliniques, lignes d'information, relais communautaires, ressources digitales, références juridiques.</p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 32px;">
+    <div class="narrow">
+      <div class="eyebrow">Le principe d'atterrissage</div>
+      <h2>Le ratio demande / offre est la métrique invisible.</h2>
+      <p>Si une campagne déclenche 100 000 femmes à chercher de l'aide et que 50 peuvent être prises en charge correctement, le ratio demande/offre est de 2 000 pour 1. Les 99 950 autres iront soit dans le silence, soit dans le circuit informel dangereux. Dans cette hypothèse, la campagne n'a pas amélioré la santé publique — elle a renforcé le marché clandestin.</p>
+      <div class="callout" style="background: #7C3A28;">
+        <h3>Le marché clandestin Facebook — insight critique.</h3>
+        <p>La recherche formative RAES (2024) a identifié au moins 6 pages Facebook actives qui vendent du misoprostol par courrier en Côte d'Ivoire, cumulant plus de <strong style="color: var(--bg);">29 000 abonnés</strong> et plus de 10 posts par jour. PAMOJA CI n'a pas un problème de zone blanche d'information — il a un problème de captation de demande face à un marché clandestin très actif. Le combat est un combat d'accessibilité et d'anonymat des services formels.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 60px 32px; background: var(--bg-warm); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="container">
+      <div class="eyebrow eyebrow-dark">Typologie des atterrissages</div>
+      <h2>Cinq types de points d'atterrissage.</h2>
+      <div class="service-types">
+        <div class="service-type">
+          <h4>Type 01</h4>
+          <h3>Cliniques</h3>
+          <p>AIBEF (7 centres), CHU, cliniques privées, sages-femmes. Actes médicaux et prise en charge.</p>
+        </div>
+        <div class="service-type">
+          <h4>Type 02</h4>
+          <h3>Lignes d'info</h3>
+          <p>Chatbot Gyné-tantie DKT, ligne verte francophone — zone blanche critique à combler.</p>
+        </div>
+        <div class="service-type">
+          <h4>Type 03</h4>
+          <h3>Relais communautaires</h3>
+          <p>AGNDR, ODAS, ONG MESSI, Tanties ressources, leaders religieux, associations.</p>
+        </div>
+        <div class="service-type">
+          <h4>Type 04</h4>
+          <h3>Ressources digitales</h3>
+          <p>Mini-site PAMOJA (à créer), Wikipédia stratégique, canal WhatsApp diffusion.</p>
+        </div>
+        <div class="service-type">
+          <h4>Type 05</h4>
+          <h3>Juridiques</h3>
+          <p>Article 427 nouveau, note 2 pages AFJCI, guidelines SOGOCI en cours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding: 100px 32px;">
+    <div class="container">
+      <div class="eyebrow">Chantiers urgents</div>
+      <h2>Cinq zones blanches à combler.</h2>
+      <p style="max-width: 62ch; margin-bottom: 24px;">Les manques critiques dans l'écosystème d'atterrissage. Hiérarchisés par urgence opérationnelle pour la campagne 2026.</p>
+      <div class="gap-list">
+        <div class="gap">
+          <span class="priority urgent">Urgent</span>
+          <span class="label">Ligne d'information francophone professionnelle</span>
+          <span class="delai">Avant mai 2026</span>
+        </div>
+        <div class="gap">
+          <span class="priority urgent">Urgent</span>
+          <span class="label">Annuaire AIBEF public et géolocalisé</span>
+          <span class="delai">2-3 semaines</span>
+        </div>
+        <div class="gap">
+          <span class="priority urgent">Urgent</span>
+          <span class="label">Note juridique article 427 grand public</span>
+          <span class="delai">3-4 semaines</span>
+        </div>
+        <div class="gap">
+          <span class="priority important">Important</span>
+          <span class="label">Réseau « Tanties ressources » formé</span>
+          <span class="delai">6-9 mois</span>
+        </div>
+        <div class="gap">
+          <span class="priority important">Important</span>
+          <span class="label">Cartographie régionale hors Abidjan</span>
+          <span class="delai">9-12 mois</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =============================================== DASHBOARD =============================================== -->
+<div id="dashboard" class="page">
+  <section class="dash-header">
+    <div class="dash-header-inner">
+      <div class="eyebrow">Data · Snapshot avril 2026</div>
+      <h1>Ce que les données <em>disent</em>.</h1>
+      <p class="lead" style="max-width: 62ch;">Six visualisations clés construites à partir des sources ivoiriennes disponibles : Talkwalker, Google Trends, commentaires PCTC, revue de presse, recherche formative. Les chiffres sont tracés et la méthodologie documentée. Prochain rafraîchissement trimestriel.</p>
+    </div>
+  </section>
+
+  <div class="dash-grid">
+    <!-- Card 1 - Big stat -->
+    <div class="dash-card span-2">
+      <h4>Fait structurant</h4>
+      <div class="title-sm">Part de femmes ayant été enceintes ayant déjà avorté</div>
+      <div class="big-stat"><em>43</em>%</div>
+      <div class="stat-legend">des femmes ivoiriennes ayant été enceintes ont eu au moins un avortement provoqué. Elles sont partout, invisibilisées par le silence social.</div>
+      <div class="source">Source · PMA 2017 Côte d'Ivoire</div>
+    </div>
+    <!-- Card 2 - Big stat -->
+    <div class="dash-card span-2">
+      <h4>Mortalité maternelle</h4>
+      <div class="title-sm">Part due à l'avortement clandestin</div>
+      <div class="big-stat">10 <span style="font-size: 40px; color: var(--ink-muted);">à</span> <em>18</em>%</div>
+      <div class="stat-legend">de la mortalité maternelle en CI est liée à l'avortement non sécurisé. Taux de mortalité maternelle : 502 à 944 pour 100 000 naissances vivantes.</div>
+      <div class="source">Source · OMS et données Ministère CI</div>
+    </div>
+    <!-- Card 3 - Marché clandestin -->
+    <div class="dash-card span-2" style="background: var(--ink); color: var(--bg);">
+      <h4 style="color: rgba(255,255,255,0.5);">Marché clandestin</h4>
+      <div class="title-sm" style="color: var(--bg);">Pages Facebook identifiées vendant du misoprostol</div>
+      <div class="big-stat" style="color: var(--bg);">29 <em style="color: var(--accent);">000</em>+</div>
+      <div class="stat-legend" style="color: rgba(255,255,255,0.7);">abonnés cumulés sur 6 pages Facebook identifiées dans la recherche formative, avec 10+ posts par jour. Offre clandestine dominante, problème de captation de demande.</div>
+      <div class="source" style="color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.2);">Source · Recherche formative RAES 2024</div>
+    </div>
+
+    <!-- Card 4 - Sentiment Talkwalker -->
+    <div class="dash-card span-3">
+      <h4>Social listening Talkwalker</h4>
+      <div class="title-sm">Sentiment sur 515 mentions CI (août 2025 — avril 2026)</div>
+      <div class="bar-list" style="margin-top: 10px;">
+        <div class="bar-row">
+          <span class="bar-label">Négatif</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 55%; background: var(--accent);"></div></div>
+          <span class="bar-value">55,0%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Neutre</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 39%; background: var(--ochre);"></div></div>
+          <span class="bar-value">39,2%</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Positif</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 6%; background: var(--forest);"></div></div>
+          <span class="bar-value">5,8%</span>
+        </div>
+      </div>
+      <p style="font-size: 13px; margin-top: 20px; color: var(--ink-muted);">84% des mentions viennent de Twitter/X. Le mot le plus fréquemment associé : « viol » (89,6% des mentions).</p>
+      <div class="source">Source · Talkwalker, corpus CI filtré</div>
+    </div>
+
+    <!-- Card 5 - Google Trends -->
+    <div class="dash-card span-3">
+      <h4>Google Trends · 12 derniers mois</h4>
+      <div class="title-sm">Top requêtes associées à « avortement » en CI</div>
+      <div class="bar-list" style="margin-top: 10px;">
+        <div class="bar-row">
+          <span class="bar-label">« médicament avortement »</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 100%;"></div></div>
+          <span class="bar-value">100</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">« comment faire un avortement »</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 70%;"></div></div>
+          <span class="bar-value">70</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">« pilule pour avortement prix »</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 68%;"></div></div>
+          <span class="bar-value">68</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">« misoprostol »</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 55%;"></div></div>
+          <span class="bar-value">55</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">« misofem »</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 37%;"></div></div>
+          <span class="bar-value">37</span>
+        </div>
+      </div>
+      <p style="font-size: 13px; margin-top: 20px; color: var(--ink-muted);">Les femmes cherchent l'info d'auto-médication. Elle doit exister et être fiable.</p>
+      <div class="source">Source · Google Trends CI, 12 derniers mois</div>
+    </div>
+
+    <!-- Card 6 - PCTC ratio -->
+    <div class="dash-card span-3">
+      <h4>Commentaires campagne #ParceQueTuComptes</h4>
+      <div class="title-sm">Ratio des conseils donnés dans les commentaires</div>
+      <div style="display: flex; gap: 40px; margin-top: 20px; align-items: flex-end;">
+        <div>
+          <div class="big-stat" style="color: var(--forest); font-size: 48px;">18</div>
+          <div class="stat-legend">Pro-avortement<br>« il faut avorter »</div>
+        </div>
+        <div style="font-family: var(--serif); font-size: 28px; color: var(--ink-muted); padding-bottom: 16px;">:</div>
+        <div>
+          <div class="big-stat" style="color: var(--accent); font-size: 48px;">10</div>
+          <div class="stat-legend">Anti-avortement<br>« ne fais pas ça »</div>
+        </div>
+        <div style="margin-left: auto; text-align: right;">
+          <div style="font-family: var(--mono); font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em;">Ratio</div>
+          <div style="font-family: var(--serif); font-style: italic; font-size: 36px; color: var(--ink);">1,8:1</div>
+        </div>
+      </div>
+      <p style="font-size: 13px; margin-top: 20px; color: var(--ink-muted);">Le vrai problème dans les commentaires n'est pas l'opposition à l'avortement — c'est la moquerie misogyne et le victim-blaming sur les histoires d'inceste et de viol.</p>
+      <div class="source">Source · Export commentaires PCTC, 354 commentaires analysés</div>
+    </div>
+
+    <!-- Card 7 - Revue de presse -->
+    <div class="dash-card span-3">
+      <h4>Revue de presse CI · 80 articles, 12 mois</h4>
+      <div class="title-sm">Narratifs dominants dans les médias</div>
+      <div class="bar-list" style="margin-top: 10px;">
+        <div class="bar-row">
+          <span class="bar-label">Responsabilité féminine dominante</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 100%; background: var(--accent);"></div></div>
+          <span class="bar-value">13</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Tabou social</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 85%; background: var(--terre);"></div></div>
+          <span class="bar-value">11</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Compassion religieuse</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 85%; background: var(--forest);"></div></div>
+          <span class="bar-value">11</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Danger sanitaire</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 85%; background: var(--ochre);"></div></div>
+          <span class="bar-value">11</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Absence des hommes</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 54%; background: var(--blue);"></div></div>
+          <span class="bar-value">7</span>
+        </div>
+      </div>
+      <p style="font-size: 13px; margin-top: 20px; color: var(--ink-muted);">« Responsabilité féminine dominante » et « absence des hommes » cumulent 20 articles. Validation du pilier 4.</p>
+      <div class="source">Source · Revue de presse CI RAES, 80 articles codifiés</div>
+    </div>
+
+    <!-- Card 8 - Call to action -->
+    <div class="dash-card span-6" style="background: var(--accent-soft); border-color: var(--accent);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+        <div style="flex: 1; min-width: 300px;">
+          <h4 style="color: var(--accent-dark);">Méthode</h4>
+          <div class="title-sm">Données sourcées et traçables. Rafraîchissement trimestriel prévu.</div>
+          <p style="font-size: 14px; max-width: 60ch; color: var(--ink-2);">Le chiffre « 79% de sentiment négatif » de la v1 n'a pas été reconstituable à partir du fichier Talkwalker source — il a été retiré et remplacé par les chiffres tracés ci-dessus. Toute donnée publiée ici fait l'objet d'une source vérifiable et d'une date.</p>
+        </div>
+        <a class="nav-cta" href="#" onclick="nav('sources');return false;" style="border-color: var(--accent); color: var(--accent);">Méthodologie complète →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================== OUTILS =============================================== -->
+<div id="outils" class="page">
+  <section style="padding: 100px 32px 60px;">
+    <div class="container">
+      <div class="eyebrow">Boîte à outils</div>
+      <h1>Dix livrables.<br><em>À télécharger. À utiliser. À contester.</em></h1>
+      <p class="lead" style="max-width: 62ch;">Tous les documents produits pour PAMOJA CI 2026 sont téléchargeables ici. Chaque document est accompagné d'une fiche descriptive : à quoi il sert, pour qui, dans quel contexte.</p>
+    </div>
+  </section>
+
+  <div class="tools-grid">
+    <a href="#" class="tool" onclick="alert('Dans la version live du site : téléchargement direct du fichier .docx');return false;">
+      <span class="ext">DOCX · Chantier 1</span>
+      <h3>Cadre stratégique refondu v2</h3>
+      <p>La colonne vertébrale. Grand récit, 4 piliers, 3 cercles, 7 lignes rouges. 10 pages à lire en 15 minutes avant un atelier.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 2</span>
+      <h3>Fiches Personas SBC v1</h3>
+      <p>Les 6 personas détaillés avec comportements, normes, compétences, barrières COM-B. 22 pages.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">XLSX · Chantier 2</span>
+      <h3>Matrice Tactique SBC v1</h3>
+      <p>50 tactiques en 12 colonnes filtrables. Format Excel manipulable, conçu pour l'atelier.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 3</span>
+      <h3>Cartographie Services v1</h3>
+      <p>Typologie des points d'atterrissage, parcours par persona, zones blanches, intelligence à obtenir.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">XLSX · Chantier 3</span>
+      <h3>Annuaire Services v1</h3>
+      <p>24 services, 5 feuilles, document vivant à compléter par l'équipe terrain.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · Créateurs digitaux</h3>
+      <p>TikTok, Instagram, influenceurs. Formats, volumes indicatifs, pièges spécifiques, validation.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · Équipe radio</h3>
+      <p>Club RFI et radios partenaires. Magazines, théâtre radio, chroniques, radios religieuses.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · OSC communautaires</h3>
+      <p>AGNDR, ODAS, ONG MESSI, AFJCI. Réseau Tanties ressources, ateliers VCAT.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · Audiovisuel long-format</h3>
+      <p>Séries, films, documentaires. Écrire des personnages, pas des messages.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · Leaders religieux</h3>
+      <p>Pasteurs, imams, catéchistes progressistes. Formation VCAT, pool de prêches, réseau formalisé.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <a href="#" class="tool" onclick="alert('Dans la version live : téléchargement');return false;">
+      <span class="ext">DOCX · Chantier 4</span>
+      <h3>Brief · Journalistes & presse</h3>
+      <p>Presse écrite, TV, médias en ligne, RAM2SR. Facilitation sans contrôle éditorial.</p>
+      <span class="dl">Télécharger</span>
+    </a>
+    <div class="tool" style="border-style: dashed; background: transparent; justify-content: center; align-items: center; text-align: center;">
+      <span class="ext">À venir</span>
+      <h3>Rapport d'évaluation 2026</h3>
+      <p>Mesure d'impact, retours terrain, recommandations pour le cycle 2027. Publication prévue janvier 2027.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================== SOURCES =============================================== -->
+<div id="sources" class="page">
+  <section style="padding: 100px 32px 60px;">
+    <div class="container">
+      <div class="eyebrow">Méthodologie</div>
+      <h1>Sources et <em>traçabilité.</em></h1>
+      <p class="lead" style="max-width: 62ch;">Chaque chiffre cité dans ce handbook est tracé. Les affirmations non sourçables sont explicitement marquées comme hypothèses à vérifier. Cette page documente les sources primaires et secondaires, les références théoriques et les zones d'incertitude.</p>
+    </div>
+  </section>
+
+  <section style="padding: 40px 32px 80px;">
+    <div class="narrow">
+      <h2>Sources primaires Côte d'Ivoire.</h2>
+      <ul class="editorial">
+        <li><strong>Recherche formative RAES CI (février 2024).</strong> 55 entretiens qualitatifs, 6 focus groups. Base qualitative principale — verbatims, attitudes, acteurs.</li>
+        <li><strong>Campagne #ParceQueTuComptes — export commentaires (9 avril 2026).</strong> 354 commentaires analysés. Ratio conseils pro/anti-avortement : 1,8 pour 1.</li>
+        <li><strong>Talkwalker — corpus CI filtré (août 2025 — avril 2026).</strong> 515 mentions. Sentiment : 55,0% négatif, 39,2% neutre, 5,8% positif. 84% Twitter/X.</li>
+        <li><strong>Google Trends CI — « avortement » (12 derniers mois).</strong> Top requêtes d'auto-médication dominées par « médicament avortement », « comment faire un avortement », « misoprostol ».</li>
+        <li><strong>Revue de presse CI (80 articles, 12 mois).</strong> Codifiée par cercles, tonalités, narratifs.</li>
+        <li><strong>Meeting Minutes RAES / Amplify Change (12 avril 2026).</strong> Workshop C4 — décisions stratégiques, intelligence à obtenir.</li>
+      </ul>
+
+      <h2 style="margin-top: 60px;">Sources épidémiologiques.</h2>
+      <ul class="editorial">
+        <li><strong>PMA 2017 / PMA 2020 Côte d'Ivoire.</strong> 43% des femmes ayant été enceintes ont eu au moins un avortement provoqué. 209 000 à 288 000 avortements par an. 63% non sécurisés.</li>
+        <li><strong>OMS et données ministérielles CI.</strong> 10 à 18% de la mortalité maternelle en CI liée à l'avortement non sécurisé.</li>
+      </ul>
+
+      <h2 style="margin-top: 60px;">Sources théoriques.</h2>
+      <ul class="editorial">
+        <li><strong>Note conceptuelle NED — Narrative Ecosystem Design</strong> (RAES / OASIS).</li>
+        <li><strong>Norman Lear Center — 20 Years of Research on the Power of Entertainment to Support Narrative Change</strong> (USC, 2023).</li>
+        <li><strong>UNESCO — International Technical Guidance on Sexuality Education</strong> et Principes directeurs.</li>
+        <li><strong>Robinson (2018), Kalra et al. (2021), FrameWorks Institute (2021)</strong> sur narrative change et infrastructure narrative.</li>
+      </ul>
+
+      <h2 style="margin-top: 60px;">Zones d'incertitude.</h2>
+      <div class="callout">
+        <h3>Le chiffre « 79% de sentiment négatif » de la v1 a été retiré.</h3>
+        <p>Non reconstituable à partir du fichier Talkwalker source (le chiffre reconstitué est 55,0% négatif). À clarifier avec l'équipe d'analyse v1 pour comprendre l'origine du chiffre et, s'il existait une méthodologie distincte, la documenter. En l'état, nous ne citons que les chiffres tracés.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =============================================== À PROPOS =============================================== -->
+<div id="apropos" class="page">
+  <section style="padding: 100px 32px 60px;">
+    <div class="container">
+      <div class="eyebrow">À propos</div>
+      <h1>PAMOJA CI<br><em>en quelques mots.</em></h1>
+      <p class="lead" style="max-width: 62ch;">Un dispositif de santé sexuelle et reproductive conçu en Côte d'Ivoire, pour la Côte d'Ivoire, par un écosystème d'acteurs ivoiriens — avec un partenariat stratégique RAES et Amplify Change.</p>
+    </div>
+  </section>
+
+  <section style="padding: 40px 32px 80px;">
+    <div class="narrow">
+      <h2>Gouvernance.</h2>
+      <p><strong>Maîtrise d'ouvrage :</strong> RAES. Pilotage stratégique, validation des orientations éditoriales, supervision globale du dispositif.</p>
+      <p><strong>Partenaire financier :</strong> Amplify Change et autres bailleurs identifiés dans les rapports annuels.</p>
+      <p><strong>Coordination opérationnelle :</strong> consultante spécialisée (Audrey Iatoni, volet radio) et équipe PAMOJA CI.</p>
+      <p><strong>Prestataires principaux :</strong> Club RFI Côte d'Ivoire (coordination radio, coordinateur Aman Ado), pool de créateurs digitaux partenaires, maisons de production audiovisuelles, OSC ivoiriennes.</p>
+
+      <h2 style="margin-top: 60px;">Partenaires identifiés (non exhaustif).</h2>
+      <ul class="editorial">
+        <li><strong>AIBEF</strong> — Association Ivoirienne pour le Bien-Être Familial. 7 centres en CI.</li>
+        <li><strong>AGNDR</strong> — Action Contre les Grossesses Non Désirées et à Risque.</li>
+        <li><strong>ODAS</strong> — travaille avec voix religieuses progressistes.</li>
+        <li><strong>ONG MESSI</strong> — réseau jeunes.</li>
+        <li><strong>AFJCI</strong> — Association des Femmes Juristes de Côte d'Ivoire.</li>
+        <li><strong>SOGOCI</strong> — Société des Obstétriciens Gynécologues de Côte d'Ivoire.</li>
+        <li><strong>DKT</strong> — chatbot Gyné-tantie, disponibilité misoprostol.</li>
+        <li><strong>RAM2SR</strong> — Réseau des Acteurs des Médias pour la promotion de la SSR.</li>
+      </ul>
+
+      <h2 style="margin-top: 60px;">Contact.</h2>
+      <p>Pour toute question sur ce handbook, demande de documentation supplémentaire ou proposition de partenariat, écrire à <strong>contact@pamoja-ci.org</strong> (adresse fictive dans la maquette · à configurer avec l'équipe RAES).</p>
+    </div>
+  </section>
+</div>
+
+<!-- =============================================== LOGIN =============================================== -->
+<div id="login" class="page">
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="eyebrow">Zone interne</div>
+      <h2>Espace équipe PAMOJA CI.</h2>
+      <p>Accès réservé à l'équipe, aux prestataires et aux partenaires stratégiques. Contient les informations sensibles non publiques : intelligence SOGOCI, cartographie détaillée des services avec coordonnées, cas terrain documentés, retours opérationnels hebdomadaires.</p>
+      <input type="text" placeholder="Identifiant">
+      <input type="password" placeholder="Mot de passe">
+      <button class="submit" onclick="alert('Dans la version live : authentification gérée par le CMS. Cette zone contient environ 8-10 pages supplémentaires — intelligence guidelines SOGOCI, parcours détaillés des cas sensibles, coordonnées complètes des services, retours terrain hebdomadaires, tableau de suivi des engagements partenaires.');return false;">Se connecter</button>
+      <div class="notice">
+        <strong>Maquette · Note technique.</strong> Dans la version live, cette zone contient ~8-10 pages supplémentaires : intelligence SOGOCI guidelines, cartographie complète avec coordonnées, cas terrain, tableau de suivi, retours hebdomadaires.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================== 404 =============================================== -->
+<div id="notfound" class="page">
+  <div class="notfound">
+    <div class="big404">404</div>
+    <h2 style="margin-top: 20px;">Cette page n'existe pas.</h2>
+    <p style="margin-top: 10px;">Ou alors elle existe, mais elle est dans la zone interne.</p>
+    <a class="nav-cta" href="#" onclick="nav('home');return false;" style="margin-top: 30px;">Retour à l'accueil</a>
+  </div>
+</div>
+
+<!-- =============================================== FOOTER =============================================== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">PAMOJA<em>.</em>CI</div>
+      <p style="color: rgba(255,255,255,0.6); font-size: 14px; max-width: 42ch;">Une application du Narrative Ecosystem Design à la santé sexuelle et reproductive en Côte d'Ivoire. Handbook v1 · 2026.</p>
+    </div>
+    <div>
+      <h4>Handbook</h4>
+      <a href="#" onclick="nav('strategie');return false;">Stratégie</a>
+      <a href="#" onclick="nav('personas');return false;">Personas</a>
+      <a href="#" onclick="nav('matrice');return false;">Matrice</a>
+      <a href="#" onclick="nav('services');return false;">Services</a>
+    </div>
+    <div>
+      <h4>Ressources</h4>
+      <a href="#" onclick="nav('dashboard');return false;">Data</a>
+      <a href="#" onclick="nav('outils');return false;">Outils</a>
+      <a href="#" onclick="nav('sources');return false;">Sources</a>
+      <a href="#" onclick="nav('ned');return false;">Le modèle NED</a>
+    </div>
+    <div>
+      <h4>À propos</h4>
+      <a href="#" onclick="nav('apropos');return false;">PAMOJA CI</a>
+      <a href="mailto:contact@pamoja-ci.org">Contact</a>
+    </div>
+  </div>
+  <div class="footer-meta">
+    <span>RAES · 2026 · Handbook v1</span>
+    <span>Données snapshot · Avril 2026</span>
+  </div>
+</footer>
+
+<script>
+// Data : 50 tactiques (extrait opérationnel, version complète dans l'Excel téléchargeable)
+const TACTIQUES = [
+  {n:1, persona:'aminata', personaLabel:'Aminata', pilier:'P1', comb:'M', format:'TikTok court (15-30s)', angle:'Série « Ce que personne ne t\\'a dit » — 1 fait médical ou juridique par capsule, raconté par une jeune femme proche en âge', comp:'Chercher l\\'info fiable sur la contraception et les cas légaux article 427', atter:'Lien bio → mini-site ressources PAMOJA avec annuaire AIBEF', prio:1},
+  {n:2, persona:'aminata', personaLabel:'Aminata', pilier:'P1', comb:'C', format:'Carrousel Instagram', angle:'« AIBEF c\\'est quoi exactement ? » — décodage visuel : qui, où, combien, confidentialité', comp:'Identifier un point d\\'atterrissage sûr près de chez elle', atter:'Slide finale : numéro WhatsApp AIBEF + adresses 7 centres', prio:1},
+  {n:3, persona:'aminata', personaLabel:'Aminata', pilier:'P2', comb:'C', format:'Reels témoignage anonymisé', angle:'Voix d\\'une jeune femme qui raconte son parcours — ce qu\\'elle aurait aimé savoir avant', comp:'Comprendre la différence avortement sécurisé vs clandestin', atter:'Description : lien vers page ressources + ligne d\\'écoute', prio:1},
+  {n:4, persona:'aminata', personaLabel:'Aminata', pilier:'P1', comb:'C', format:'Stories Instagram quiz', angle:'Quiz « Article 427 : vrai ou faux ? » — 5 questions ludiques', comp:'Tester ses connaissances sur l\\'article 427', atter:'Carrousel permanent dans highlights « Tes droits »', prio:1},
+  {n:5, persona:'aminata', personaLabel:'Aminata', pilier:'P3', comb:'M', format:'Podcast court 3-5 min', angle:'« Ce qu\\'on se dit entre meilleures amies » — 2 voix, conversation naturelle', comp:'Oser parler à une amie de confiance', atter:'Numéro ligne d\\'écoute + kit « comment aider une amie »', prio:2},
+  {n:6, persona:'aminata', personaLabel:'Aminata', pilier:'P1', comb:'O', format:'WhatsApp chatbot', angle:'Porte d\\'entrée « J\\'ai une question et je ne veux pas que ça se sache »', comp:'Obtenir une information médicale fiable et confidentielle', atter:'Redirection ciblée : AIBEF / services / ligne verte', prio:1},
+  {n:7, persona:'aminata', personaLabel:'Aminata', pilier:'P1', comb:'M', format:'Radio jeune (NRJ, Trace)', angle:'Chronique hebdo « Entre nous les filles » — 2 min, ton libre', comp:'Entendre le sujet traité publiquement sans honte', atter:'Numéro WhatsApp / site ressources', prio:2},
+  {n:8, persona:'adjoua', personaLabel:'Adjoua', pilier:'P3', comb:'M', format:'Radio magazine santé', angle:'Magazine récurrent « Entre nous » — invités sage-femme, femme leader, leader religieux progressiste', comp:'Écouter une conversation qui articule foi et compassion', atter:'Numéros utiles et adresses en fin d\\'émission', prio:1},
+  {n:9, persona:'adjoua', personaLabel:'Adjoua', pilier:'P3', comb:'M', format:'Théâtre radio série', angle:'12 épisodes suivant une famille où une jeune fille tombe enceinte', comp:'Reconnaître chez un personnage ce qu\\'elle vit ou a vu vivre', atter:'Discussion communautaire (tontine ou radio)', prio:1},
+  {n:10, persona:'adjoua', personaLabel:'Adjoua', pilier:'P3', comb:'O', format:'Tontine / atelier communautaire', angle:'Kit d\\'animation pour femmes leaders de tontines', comp:'Parler du sujet en cercle de femmes de confiance', atter:'Intervention d\\'une OSC référente', prio:1},
+  {n:11, persona:'adjoua', personaLabel:'Adjoua', pilier:'P3', comb:'M', format:'Radio religieuse', angle:'Intervention pasteur/imam progressiste sur radio grand public', comp:'Entendre une voix religieuse qui autorise la compassion', atter:'Associations religieuses d\\'accompagnement', prio:1},
+  {n:12, persona:'koffi', personaLabel:'Koffi', pilier:'P4', comb:'O', format:'Podcast entre hommes', angle:'3-4 hommes (comédien, footballeur, journaliste) discutent de paternité, responsabilité, couple', comp:'Parler publiquement du sujet entre hommes sans moquerie', atter:'Kit « ce que tu peux faire »', prio:1},
+  {n:13, persona:'koffi', personaLabel:'Koffi', pilier:'P4', comb:'M', format:'Capsule humoristique', angle:'Sketch de 90s : scène où un homme évite le sujet, retournement humoristique', comp:'Reconnaître une situation absurde sans agressivité', atter:'Site micro-communautaire « On en parle »', prio:1},
+  {n:14, persona:'koffi', personaLabel:'Koffi', pilier:'P4', comb:'M', format:'Interview sportif', angle:'Interview 5 min avec footballeur / artiste qui parle de sa responsabilité de père', comp:'Entendre un modèle masculin admiré parler de paternité', atter:'Suivre le podcast « Entre hommes »', prio:1},
+  {n:15, persona:'koffi', personaLabel:'Koffi', pilier:'P4', comb:'O', format:'WhatsApp groupe masculin', angle:'Micro-vidéos 30s avec question ouverte pour relance groupe', comp:'Lancer une conversation sérieuse dans son groupe', atter:'Lien vers podcast ou page ressources', prio:2},
+  {n:16, persona:'koffi', personaLabel:'Koffi', pilier:'P4', comb:'C', format:'Kit d\\'orientation hommes', angle:'Carte « Ta partenaire est enceinte — voici ce que tu peux faire » : 5 étapes', comp:'Savoir quoi faire quand sa partenaire lui annonce une grossesse', atter:'Distribution maquis, clubs sportifs, barbershops', prio:2},
+  {n:17, persona:'tantie', personaLabel:'Tantie Affoué', pilier:'P3', comb:'O', format:'Réseau WhatsApp tanties', angle:'Groupe privé avec mise à jour mensuelle : services, cas, retours', comp:'Entrer dans une communauté de pratique formée', atter:'Formation VCAT en présentiel quarterly', prio:1},
+  {n:18, persona:'tantie', personaLabel:'Tantie Affoué', pilier:'P2', comb:'C', format:'Kit d\\'orientation poche', angle:'Document 4 pages : qui contacter, dans quel cas, questions à poser, signes d\\'alerte', comp:'Avoir sous la main la bonne info au bon moment', atter:'Contacts AIBEF + ligne verte + OSC', prio:1},
+  {n:19, persona:'tantie', personaLabel:'Tantie Affoué', pilier:'P3', comb:'M', format:'Ateliers VCAT communautaires', angle:'Atelier 3h animé par OSC — échanges, cas, textes religieux en dialogue', comp:'Faire le travail d\\'articulation valeurs / réalité', atter:'Engagement à rejoindre le réseau WhatsApp', prio:1},
+  {n:20, persona:'tantie', personaLabel:'Tantie Affoué', pilier:'P2', comb:'C', format:'Annuaire services numérique', angle:'Carte interactive en ligne + version A3 plastifiée', comp:'Connaître précisément les services disponibles', atter:'Points de retrait (AIBEF, OSC partenaires)', prio:1},
+  {n:21, persona:'eliane', personaLabel:'Dr Éliane', pilier:'P2', comb:'C', format:'Note juridique SOGOCI / AFJCI', angle:'Document technique co-signé : cas, procédures, responsabilité', comp:'Maîtriser précisément le cadre de l\\'article 427', atter:'Diffusion SOGOCI, hôpitaux, cabinets privés', prio:1},
+  {n:22, persona:'eliane', personaLabel:'Dr Éliane', pilier:'P2', comb:'C', format:'Webinaire formation continue', angle:'2h avec experts nationaux et internationaux — cas cliniques, Q&A', comp:'Se former aux protocoles OMS', atter:'Attestation + communauté de pratique', prio:1},
+  {n:23, persona:'eliane', personaLabel:'Dr Éliane', pilier:'P2', comb:'M', format:'Plaidoyer guidelines SOGOCI', angle:'Contribution technique + notes de plaidoyer — lobbying professionnel ciblé', comp:'Intégrer les recommandations OMS dans les guidelines', atter:'Inclusion dans document officiel', prio:1},
+  {n:24, persona:'eliane', personaLabel:'Dr Éliane', pilier:'P3', comb:'O', format:'Communauté pratique SOGOCI', angle:'Groupe restreint mensuel, cas pratiques et soutien entre pairs', comp:'Ne pas être isolée dans sa pratique', atter:'Plateforme de partage clinique sécurisée', prio:1},
+  {n:25, persona:'mariam', personaLabel:'Pasteur Mariam', pilier:'P3', comb:'C', format:'Formation VCAT religieuse', angle:'Formation 3 jours type Catholics for Choice adaptée au contexte ivoirien', comp:'Maîtriser un cadre théologique de compassion qui tient', atter:'Intégration réseau leaders progressistes', prio:1},
+  {n:26, persona:'mariam', personaLabel:'Pasteur Mariam', pilier:'P3', comb:'C', format:'Pool de prêches modèles', angle:'Kit de 10 prédications type — chrétien et musulman — sur la compassion', comp:'Avoir des ressources homilétiques prêtes à adapter', atter:'Communauté partage WhatsApp', prio:1},
+  {n:27, persona:'mariam', personaLabel:'Pasteur Mariam', pilier:'P3', comb:'M', format:'Passage radio religieuse', angle:'Entretien pastoral 10-15 min sur radio religieuse confessionnelle', comp:'Porter la parole de compassion auprès d\\'une large audience de foi', atter:'Réseau d\\'accompagnement', prio:1}
+];
+
+function renderTactiques() {
+  const list = document.getElementById('tactique-list');
+  if (!list) return;
+  const f = window.filters || {persona:'all', pilier:'all', comb:'all'};
+  const filtered = TACTIQUES.filter(t =>
+    (f.persona === 'all' || t.persona === f.persona) &&
+    (f.pilier === 'all' || t.pilier === f.pilier) &&
+    (f.comb === 'all' || t.comb === f.comb)
+  );
+  if (filtered.length === 0) {
+    list.innerHTML = '<p style="text-align: center; padding: 60px 0; color: var(--ink-muted);">Aucune tactique ne correspond à ces filtres.</p>';
+    return;
+  }
+  list.innerHTML = filtered.map(t => `
+    <div class="tactique">
+      <div class="id">${String(t.n).padStart(2,'0')}</div>
+      <div>
+        <div class="tactique-head">
+          <h3>${t.format}</h3>
+          <span class="badge persona-${t.persona}">${t.personaLabel}</span>
+          <span class="badge pilier">${t.pilier}</span>
+          <span class="badge comb-${t.comb.toLowerCase()}">COM-B · ${t.comb}</span>
+          ${t.prio === 1 ? '<span class="badge" style="background: var(--forest-soft); color: var(--forest);">Priorité 1</span>' : ''}
+        </div>
+        <div class="tactique-body">
+          <p><strong>Angle :</strong> ${t.angle}</p>
+          <p><strong>Comportement cible :</strong> ${t.comp}</p>
+          <p><strong>Atterrissage :</strong> ${t.atter}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.filters = {persona: 'all', pilier: 'all', comb: 'all'};
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const f = chip.dataset.f;
+    const v = chip.dataset.v;
+    document.querySelectorAll(`.filter-chip[data-f="${f}"]`).forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    window.filters[f] = v;
+    renderTactiques();
+  });
+});
+
+// =============== ROUTER (hash-based) ===============
+function nav(page) {
+  if (!page) page = 'home';
+  // Update URL hash without scrolling
+  if (window.location.hash !== '#/' + page) {
+    window.history.pushState({page: page}, '', '#/' + page);
+  }
+  renderPage(page);
+}
+
+function renderPage(page) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target page
+  const target = document.getElementById(page);
+  if (target) {
+    target.classList.add('active');
+  } else {
+    const nf = document.getElementById('notfound');
+    if (nf) nf.classList.add('active');
+    else document.getElementById('home').classList.add('active');
+  }
+  // Update active nav link
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navLink = document.querySelector('.nav-links a[data-nav="' + page + '"]');
+  if (navLink) navLink.classList.add('active');
+  // Scroll to top
+  window.scrollTo({top: 0, behavior: 'instant'});
+  // Render matrice si besoin
+  if (page === 'matrice') setTimeout(renderTactiques, 50);
+}
+
+// Listen to back/forward browser buttons
+window.addEventListener('popstate', function(e) {
+  const hash = window.location.hash;
+  const page = hash.replace(/^#\/?/, '') || 'home';
+  renderPage(page);
+});
+
+// =============== NED PAGE — Interactive schema ===============
+const NED_DETAILS = {
+  nuage: {
+    title: 'Niveau 5 — Nuage narratif',
+    desc: 'L\'enveloppe la plus diffuse : l\'atmosphère culturelle globale autour d\'un sujet, produite par l\'écosystème dans son ensemble. Le nuage n\'est pas contrôlé par un acteur unique — il émerge de la densité des récits convergents. Objectif du NED : déplacer progressivement ce nuage.'
+  },
+  recit: {
+    title: 'Niveau 4 — Grand récit central et boussole morale',
+    desc: 'La phrase-matrice qui oriente tout l\'écosystème. Pour PAMOJA CI : « Nous ne laissons pas les nôtres mourir seules. » La boussole morale associée précise les valeurs qui doivent rester partagées entre tous les contenus — compassion, protection, dignité, responsabilité partagée.'
+  },
+  piliers: {
+    title: 'Niveau 3 — Piliers narratifs',
+    desc: 'Les grandes portes d\'entrée par lesquelles le grand récit se décline. Pour PAMOJA CI : Réalité (ça arrive, à toutes), Le silence tue, Compassion ivoirienne, Les hommes. Un contenu efficace active un pilier prioritaire — parfois un second en appui — mais jamais les quatre en même temps.'
+  },
+  cercles: {
+    title: 'Niveau 2 — Cercles concentriques',
+    desc: 'L\'étagement de proximité au sujet sensible. Cercle 3 sociétal (valeurs, foi, famille) pour ouvrir sans déclencher les défenses. Cercle 2 connexe (grossesse non désirée, contraception, viol) pour le pont. Cercle 1 avortement pour l\'atterrissage — jamais pour l\'ouverture. La circulation entre cercles structure chaque récit.'
+  },
+  tactiques: {
+    title: 'Niveau 1 — Tactiques et atterrissages',
+    desc: 'Le niveau du terrain. Un contenu précis — un TikTok, une chronique radio, un prêche, un atelier — produit par un acteur identifié pour un persona précis, avec un atterrissage concret vers un service réel. C\'est le seul niveau où tout doit être absolument précis et vérifiable. Si l\'atterrissage n\'existe pas, la tactique ne doit pas être diffusée.'
+  }
+};
+
+function showNEDDetail(key) {
+  const data = NED_DETAILS[key];
+  if (!data) return;
+  const box = document.getElementById('ned-schema-detail');
+  const title = document.getElementById('ned-schema-title');
+  const desc = document.getElementById('ned-schema-desc');
+  if (!box || !title || !desc) return;
+  title.textContent = data.title;
+  desc.textContent = data.desc;
+  box.classList.add('active');
+}
+
+function scrollToNED(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    const y = el.getBoundingClientRect().top + window.pageYOffset - 120;
+    window.scrollTo({top: y, behavior: 'smooth'});
+  }
+}
+
+// =============== INIT ===============
+renderTactiques();
+// Initial page from URL hash
+(function() {
+  const hash = window.location.hash;
+  const page = hash.replace(/^#\/?/, '') || 'home';
+  renderPage(page);
+})();
+</script>
+
+</body>
+</html>
